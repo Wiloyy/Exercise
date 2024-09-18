@@ -13,6 +13,9 @@ let botao7 = document.getElementById('botao-7');
 let botao8 = document.getElementById('botao-8');
 let reset = document.getElementById('reset');
 
+let tabela = document.querySelectorAll('.tabela');
+
+
 let vitoria = document.getElementById('vitoria');
 let jogador = "X";
 
@@ -32,12 +35,10 @@ botoes.forEach(function (botao) {
 });
 
 
-botoes.forEach(function (botao) {
-    botao.addEventListener('click', function () {
-        reset.addEventListener('click', function () {
-            botao.textContent = ''
-            vitoria.textContent = ''
-        })
+reset.addEventListener('click', function () {
+    botoes.forEach(function (botao) {
+        botao.textContent = ''
+        console.log('reset')
     })
 })
 
