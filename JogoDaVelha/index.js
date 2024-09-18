@@ -13,8 +13,6 @@ let botao7 = document.getElementById('botao-7');
 let botao8 = document.getElementById('botao-8');
 let reset = document.getElementById('reset');
 
-let tabela = document.querySelectorAll('.tabela');
-
 
 let vitoria = document.getElementById('vitoria');
 let jogador = "X";
