@@ -11,6 +11,7 @@ let botao5 = document.getElementById('botao-5');
 let botao6 = document.getElementById('botao-6');
 let botao7 = document.getElementById('botao-7');
 let botao8 = document.getElementById('botao-8');
+let reset = document.getElementById('reset');
 
 let vitoria = document.getElementById('vitoria');
 let jogador = "X";
@@ -29,6 +30,16 @@ botoes.forEach(function (botao) {
         vitoriaParaXouO()
     });
 });
+
+
+botoes.forEach(function (botao) {
+    botao.addEventListener('click', function () {
+        reset.addEventListener('click', function () {
+            botao.textContent = ''
+            vitoria.textContent = ''
+        })
+    })
+})
 
 
 function vitoriaParaXouO() {
