@@ -20,6 +20,7 @@ let jogador = "X";
 botoes.forEach(function (botao) {
     botao.addEventListener('click', function () {
         if (botao.textContent == '') {
+            jogador1 = jogador 
             if (jogador == 'X') {
                 botao.textContent = 'X'
                 jogador = 'O'
@@ -27,42 +28,34 @@ botoes.forEach(function (botao) {
                 botao.textContent = 'O'
                 jogador = 'X'
             }
+            if (vitoriaParaXouO(jogador1)) {
+                vitoria.textContent = `O jogador "${jogador1}" venceu!`;
+            }
+            console.log(jogador1)
         }
-        vitoriaParaXouO()
     });
 });
 
-
+function vitoriaParaXouO(vencedor) {
+    if ((botao0.textContent == vencedor && botao1.textContent == vencedor && botao2.textContent == vencedor) ||
+        (botao3.textContent == vencedor && botao4.textContent == vencedor && botao5.textContent == vencedor) ||
+        (botao6.textContent == vencedor && botao7.textContent == vencedor && botao8.textContent == vencedor) ||
+        (botao0.textContent == vencedor && botao3.textContent == vencedor && botao6.textContent == vencedor) ||
+        (botao1.textContent == vencedor && botao4.textContent == vencedor && botao7.textContent == vencedor) ||
+        (botao2.textContent == vencedor && botao5.textContent == vencedor && botao8.textContent == vencedor) ||
+        (botao0.textContent == vencedor && botao4.textContent == vencedor && botao8.textContent == vencedor) ||
+        (botao2.textContent == vencedor && botao4.textContent == vencedor && botao6.textContent == vencedor)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 reset.addEventListener('click', function () {
     botoes.forEach(function (botao) {
         botao.textContent = ''
+        jogador = 'X'
+        vitoria.textContent = ''
         console.log('reset')
     })
 })
 
-
-function vitoriaParaXouO() {
-    if ((botao0.textContent == 'X' && botao1.textContent == 'X' && botao2.textContent == 'X') ||
-        (botao3.textContent == 'X' && botao4.textContent == 'X' && botao5.textContent == 'X') ||
-        (botao6.textContent == 'X' && botao7.textContent == 'X' && botao8.textContent == 'X') ||
-        (botao0.textContent == 'X' && botao3.textContent == 'X' && botao6.textContent == 'X') ||
-        (botao1.textContent == 'X' && botao4.textContent == 'X' && botao7.textContent == 'X') ||
-        (botao2.textContent == 'X' && botao5.textContent == 'X' && botao8.textContent == 'X') ||
-        (botao0.textContent == 'X' && botao4.textContent == 'X' && botao8.textContent == 'X') ||
-        (botao2.textContent == 'X' && botao4.textContent == 'X' && botao6.textContent == 'X')) {
-        vitoria.textContent = 'O jogador "X" venceu!';
-    } else if ((botao0.textContent == 'O' && botao1.textContent == 'O' && botao2.textContent == 'O') ||
-        (botao3.textContent == 'O' && botao4.textContent == 'O' && botao5.textContent == 'O') ||
-        (botao6.textContent == 'O' && botao7.textContent == 'O' && botao8.textContent == 'O') ||
-        (botao0.textContent == 'O' && botao3.textContent == 'O' && botao6.textContent == 'O') ||
-        (botao1.textContent == 'O' && botao4.textContent == 'O' && botao7.textContent == 'O') ||
-        (botao2.textContent == 'O' && botao5.textContent == 'O' && botao8.textContent == 'O') ||
-        (botao0.textContent == 'O' && botao4.textContent == 'O' && botao8.textContent == 'O') ||
-        (botao2.textContent == 'O' && botao4.textContent == 'O' && botao6.textContent == 'O')) {
-        vitoria.textContent = 'O jogador "O" venceu!';
-    } else {
-        vitoria.textContent = 'Deu velha!';
-    }
-
-
-}
