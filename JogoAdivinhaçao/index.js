@@ -7,9 +7,9 @@ let numero = geraNumeroAleatorio(1, 100);
 botao.addEventListener('click', function(){
     const valor = palpite.value;
     if(numero < valor){
-        editaTextoTitulo(`O numero é menor, seu ultimo palpite foi:  ${palpite.value}` )
+        editaTextoTitulo(`O numero é menor, seu ultimo palpite foi:  ${valor}` )
     } else if (numero > valor) {
-        editaTextoTitulo(`O numero é maior, seu ultimo palpite foi:  ${palpite.value}` )
+        editaTextoTitulo(`O numero é maior, seu ultimo palpite foi:  ${valor}` )
     } else if (numero == valor){
         editaTextoTitulo(`ACERTOUUU!!!!!`)
     } else if (valor > 100 || valor < 1) {

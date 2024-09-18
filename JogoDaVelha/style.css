@@ -1,0 +1,23 @@
+.tabela {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    width: 300px;
+    margin: 40px auto;
+}
+
+.botao {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.botao:hover {
+    background-color: #ccc;
+}
+
+h1 {
+    text-align: center;
+}
