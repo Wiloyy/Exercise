@@ -20,7 +20,7 @@ let jogador = "X";
 botoes.forEach(function (botao) {
     botao.addEventListener('click', function () {
         if (botao.textContent == '') {
-            jogador1 = jogador 
+            jogador1 = jogador
             if (jogador == 'X') {
                 botao.textContent = 'X'
                 jogador = 'O'
@@ -31,7 +31,10 @@ botoes.forEach(function (botao) {
             if (vitoriaParaXouO(jogador1)) {
                 vitoria.textContent = `O jogador "${jogador1}" venceu!`;
             }
-            console.log(jogador1)
+            if (todosBotoesSelecionados(botao)) {
+                vitoria.textContent = `Deu velha`;
+            }
+            console.log(todosBotoesSelecionados())
         }
     });
 });
@@ -50,6 +53,23 @@ function vitoriaParaXouO(vencedor) {
         return false;
     }
 }
+
+function todosBotoesSelecionados() {
+    if (botao0.textContent !== "" &&
+        botao1.textContent !== "" &&
+        botao2.textContent !== "" &&
+        botao3.textContent !== "" &&
+        botao4.textContent !== "" &&
+        botao5.textContent !== "" &&
+        botao6.textContent !== "" &&
+        botao7.textContent !== "" &&
+        botao8.textContent !== "") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 reset.addEventListener('click', function () {
     botoes.forEach(function (botao) {
         botao.textContent = ''
