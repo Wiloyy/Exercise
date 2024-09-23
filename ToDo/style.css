@@ -1,0 +1,17 @@
+.container {
+    text-align: center;
+}
+
+p{
+  padding: 2px 5px;
+  margin-right: 10px; 
+}
+
+#paragrafo > p {
+    margin-bottom: 10px; 
+  }
+  
+  #paragrafo > button {
+    display: inline-block; 
+    margin-left: 10px; 
+  }
