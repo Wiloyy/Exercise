@@ -20,7 +20,7 @@ const botao18 = document.getElementById('botao18');
 const botao19 = document.getElementById('botao19');
 const botao20 = document.getElementById('botao20');
 let jogada = 1
-// Função para verificar se botao1 e botao11 são iguais
+
 function verificaNumeros() {
     if (botao1.textContent === botao11.textContent) {
         botao1.textContent = 1;
@@ -45,9 +45,13 @@ botoes.forEach(function (botao, indice) {
             if (botao1.textContent === botao11.textContent) {
                 botao1.textContent = 1;
                 botao11.textContent = 1;
+            } else if(botao11.textContent === botao1.textContent)  {
+                botao1.textContent = 1;
+                botao11.textContent = 1;
             } else {
-                botao1.textContent = '';
-                botao.textContent = '';
+                botao1.textContent = ''
+                botao11.textContent = ''
+                botao.textContent = ''
             }
             jogada = 1; 
         }
