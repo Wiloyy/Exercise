@@ -1,0 +1,23 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    width: 400px;
+    margin: 40px auto;
+}
+
+.botoes {
+    background-color: #44bed3;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.botoes:hover {
+    background-color: #ccc;
+}
+
+h1{
+    text-align: center;
+}
