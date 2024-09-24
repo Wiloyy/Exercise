@@ -7,11 +7,3 @@ p{
   margin-right: 10px; 
 }
 
-#paragrafo > p {
-    margin-bottom: 10px; 
-  }
-  
-  #paragrafo > button {
-    display: inline-block; 
-    margin-left: 10px; 
-  }

@@ -10,27 +10,31 @@ botao.addEventListener('click', function () {
 });
 
 function adicionaTarefa(tarefa, botoes, botoes2) {
-    const novoParagrafo = document.createElement('p');
+    const novoParagrafo = document.createElement('div');
     const botaoX = document.createElement('button');
     const botaoV = document.createElement('button');
     novoParagrafo.textContent = tarefa;
     botaoX.textContent = botoes;
     botaoV.textContent = botoes2;
-    paragrafo.style.color = "red";
+    novoParagrafo.style.color = "red";
+    novoParagrafo.appendChild(botaoX)
+    novoParagrafo.appendChild(botaoV)
     paragrafo.appendChild(novoParagrafo);
-    paragrafo.appendChild(botaoX);
-    paragrafo.appendChild(botaoV);
+    
 
-    botaoX.addEventListener('click',function (){
+    botaoX.addEventListener('click', function () {
         paragrafo.removeChild(novoParagrafo);
-        paragrafo.removeChild(botaoX)
-        paragrafo.removeChild(botaoV)
     })
 
-    botaoV.addEventListener('click',function (){
-        novoParagrafo.style.color = "green";
+    botaoV.addEventListener('click', function () {
+        console.log(novoParagrafo.style.color)
+        if(novoParagrafo.style.color  === 'red'){
+           novoParagrafo.style.color = 'green'
+        } else if (novoParagrafo.style.color  === 'green') {
+            novoParagrafo.style.color = 'red'
+        }
     })
-
+    
 }
 
 
