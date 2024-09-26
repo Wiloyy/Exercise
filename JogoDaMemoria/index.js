@@ -1,61 +1,52 @@
 const botoes = document.querySelectorAll('.botoes');
-const botao1 = document.getElementById('botao1');
-const botao2 = document.getElementById('botao2');
-const botao3 = document.getElementById('botao3');
-const botao4 = document.getElementById('botao4');
-const botao5 = document.getElementById('botao5');
-const botao6 = document.getElementById('botao6');
-const botao7 = document.getElementById('botao7');
-const botao8 = document.getElementById('botao8');
-const botao9 = document.getElementById('botao9');
-const botao10 = document.getElementById('botao10');
-const botao11 = document.getElementById('botao11');
-const botao12 = document.getElementById('botao12');
-const botao13 = document.getElementById('botao13');
-const botao14 = document.getElementById('botao14');
-const botao15 = document.getElementById('botao15');
-const botao16 = document.getElementById('botao16');
-const botao17 = document.getElementById('botao17');
-const botao18 = document.getElementById('botao18');
-const botao19 = document.getElementById('botao19');
-const botao20 = document.getElementById('botao20');
-let jogada = 1
+const click = document.getElementById('click');
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let primeiroBotao = null;
+let jogada = 1;
+let contador = 0;
+let valoresAleatorios = []
 
-function verificaNumeros() {
-    if (botao1.textContent === botao11.textContent) {
-        botao1.textContent = 1;
-        botao11.textContent = 1;
-    } else {
-        botao1.textContent = '';
-        botao11.textContent = '';
-    }
+function indiceAleatorio() {
+    botoes.forEach(function (botao, indice) {
+        let numeroIndexEscolhido = geraNumeroAleatorio(0, numeros.length - 1)
+        valoresAleatorios[indice] = numeros[numeroIndexEscolhido]
+        numeros.splice(numeroIndexEscolhido, 1)
+    })
+}
+indiceAleatorio()
+
+function geraNumeroAleatorio(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
 
 botoes.forEach(function (botao, indice) {
     botao.addEventListener('click', function () {
-        if (indice >= 10) {
-            botao.textContent = (indice % 10) + 1;
-        } else if (botao.textContent === '') {
-            botao.textContent = indice + 1;
+
+        click.innerHTML = `O total de clicks fora ${contador++}`
+
+        if (botao.textContent == '') {
+            botao.textContent = valoresAleatorios[indice]
         }
-        
+
+        valor = botao.textContent
+
         if (jogada === 1) {
+            primeiroBotao = botao;
             jogada = 0;
         } else if (jogada === 0) {
-            if (botao1.textContent === botao11.textContent) {
-                botao1.textContent = 1;
-                botao11.textContent = 1;
-            } else if(botao11.textContent === botao1.textContent)  {
-                botao1.textContent = 1;
-                botao11.textContent = 1;
+            if (primeiroBotao.textContent === valor) {
+                primeiroBotao.textContent = valor;
+                botao.textContent = valor;
             } else {
-                botao1.textContent = ''
-                botao11.textContent = ''
-                botao.textContent = ''
+                primeiroBotao.textContent = '';
+                botao.textContent = '';
             }
-            jogada = 1; 
+            jogada = 1;
+            primeiroBotao = null;
         }
+
     });
+
 });
-
-
