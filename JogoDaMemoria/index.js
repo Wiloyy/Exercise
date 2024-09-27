@@ -6,12 +6,13 @@ let jogada = 1;
 let contador = 0;
 let valoresAleatorios = []
 
+
 function indiceAleatorio() {
-    botoes.forEach(function (botao, indice) {
+    for(let indice = 0; indiceFinal = numeros.length; indice < indiceFinal, indice++) {
         let numeroIndexEscolhido = geraNumeroAleatorio(0, numeros.length - 1)
         valoresAleatorios[indice] = numeros[numeroIndexEscolhido]
         numeros.splice(numeroIndexEscolhido, 1)
-    })
+    }
 }
 indiceAleatorio()
 
@@ -24,7 +25,7 @@ function geraNumeroAleatorio(min, max) {
 botoes.forEach(function (botao, indice) {
     botao.addEventListener('click', function () {
 
-        click.innerHTML = `O total de clicks fora ${contador++}`
+        click.innerHTML = `O total de clicks fora ${jogada}`
 
         if (botao.textContent == '') {
             botao.textContent = valoresAleatorios[indice]
@@ -40,11 +41,13 @@ botoes.forEach(function (botao, indice) {
                 primeiroBotao.textContent = valor;
                 botao.textContent = valor;
             } else {
-                primeiroBotao.textContent = '';
-                botao.textContent = '';
+                setTimeout(function () {
+                    primeiroBotao.textContent = '';
+                    botao.textContent = '';
+                    primeiroBotao = null;
+                }, 800)
             }
             jogada = 1;
-            primeiroBotao = null;
         }
 
     });
