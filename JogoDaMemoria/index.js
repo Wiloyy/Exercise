@@ -8,7 +8,7 @@ let valoresAleatorios = []
 
 
 function indiceAleatorio() {
-    for(let indice = 0; indiceFinal = numeros.length; indice < indiceFinal, indice++) {
+    for (let indice = 0; indiceFinal = numeros.length; indice < indiceFinal, indice++) {
         let numeroIndexEscolhido = geraNumeroAleatorio(0, numeros.length - 1)
         valoresAleatorios[indice] = numeros[numeroIndexEscolhido]
         numeros.splice(numeroIndexEscolhido, 1)
@@ -34,20 +34,23 @@ botoes.forEach(function (botao, indice) {
         valor = botao.textContent
 
         if (jogada === 1) {
-            primeiroBotao = botao;
-            jogada = 0;
+            primeiroBotao = botao
+            jogada = 0
         } else if (jogada === 0) {
-            if (primeiroBotao.textContent === valor) {
-                primeiroBotao.textContent = valor;
-                botao.textContent = valor;
+            if (primeiroBotao == botao) {
+                primeiroBotao.textContent = ''
             } else {
-                setTimeout(function () {
-                    primeiroBotao.textContent = '';
-                    botao.textContent = '';
-                    primeiroBotao = null;
-                }, 800)
-            }
-            jogada = 1;
+                if (primeiroBotao.textContent === valor) {
+                    primeiroBotao.textContent = valor;
+                    botao.textContent = valor;
+                } else {
+                    setTimeout(function () {
+                        primeiroBotao.textContent = '';
+                        botao.textContent = '';
+                        primeiroBotao = null;
+                    }, 800)
+                }
+            } jogada = 1;
         }
 
     });
