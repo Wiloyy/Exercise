@@ -5,6 +5,8 @@ let primeiroBotao = null;
 let jogada = 1;
 let contador = 0;
 let valoresAleatorios = []
+let doisBotoesClicadosEnaoPodeClicar = false
+let contadorTotal = 0
 
 
 function indiceAleatorio() {
@@ -24,17 +26,21 @@ function geraNumeroAleatorio(min, max) {
 
 botoes.forEach(function (botao, indice) {
     botao.addEventListener('click', function () {
+        if(doisBotoesClicadosEnaoPodeClicar == true){
+            return 
+        }
+        click.innerHTML = `O total de clicks fora ${++contadorTotal}`
 
-        click.innerHTML = `O total de clicks fora ${jogada}`
 
         if (botao.textContent == '') {
             botao.textContent = valoresAleatorios[indice]
         }
 
         valor = botao.textContent
-
+        
         if (jogada === 1) {
             primeiroBotao = botao
+            doisBotoesClicadosEnaoPodeClicar = false
             jogada = 0
         } else if (jogada === 0) {
             if (primeiroBotao == botao) {
@@ -48,9 +54,17 @@ botoes.forEach(function (botao, indice) {
                         primeiroBotao.textContent = '';
                         botao.textContent = '';
                         primeiroBotao = null;
+                        doisBotoesClicadosEnaoPodeClicar = false
                     }, 800)
+                    doisBotoesClicadosEnaoPodeClicar = true 
+                    
                 }
-            } jogada = 1;
+            } 
+
+
+            jogada = 1;
+            console.log(jogada)
+            console.log(doisBotoesClicadosEnaoPodeClicar)
         }
 
     });
