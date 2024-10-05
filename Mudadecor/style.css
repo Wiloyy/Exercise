@@ -1,0 +1,50 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    width: 400px;
+    margin: 40px auto;
+}
+
+#botaoVermelho {
+    color: white;
+    background-color: #c01414;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#botaoVermelho:hover {
+    background-color: #d17777;
+}
+
+#botaoAzul {
+    color: white;
+    background-color: #1549bb;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#botaoAzul:hover {
+    background-color: #60b8d3;
+}
+
+#botaoVerde {
+    color: white;
+    background-color: #51c524;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#botaoVerde:hover {
+    background-color: #9ad871;
+}
+
+h1{
+    text-align: center;
+}
