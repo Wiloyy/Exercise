@@ -20,10 +20,10 @@ buttons.forEach(function (button) {
 
         if (isAtSecondPart == 1) {
             secondPart = secondPart + button.textContent
-        }else if (button === plus || button === minus || button === division || button === multiplication) {
+        } else if (button === plus || button === minus || button === division || button === multiplication) {
             operator = button;
             isAtSecondPart = 1;
-          } else {
+        } else {
             firstPart = firstPart + button.textContent
         }
 
@@ -55,8 +55,8 @@ equals.addEventListener('click', function () {
         text.innerHTML = result;
     }
 
-    firstPart = result; 
-    secondPart = ''; 
-    operator = ''; 
-    isAtSecondPart = 0; 
+    firstPart = result;
+    secondPart = '';
+    operator = '';
+    isAtSecondPart = 0;
 });

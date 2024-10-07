@@ -20,7 +20,8 @@ p {
     margin-right: auto;
     border-radius: 10px;
 }
-body{
+
+body {
     background-image: url('calculadora.avif');
 }
 
@@ -76,7 +77,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-.container2{
+.container2 {
     background-color: rgb(53, 53, 53);
     margin-left: auto;
     margin-right: auto;
