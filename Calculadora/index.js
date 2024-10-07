@@ -1,72 +1,62 @@
-let botoes = document.querySelectorAll('.botoes')
-let texto = document.getElementById('texto')
+let buttons = document.querySelectorAll('.buttons')
+let text = document.getElementById('text')
 let reset = document.getElementById('reset')
-let igual = document.getElementById('igual')
-let mais = document.getElementById('mais')
-let menos = document.getElementById('menos')
-let divisao = document.getElementById('divisao')
-let multiplicacao = document.getElementById('multiplicacao')
-let primeiroBotao = null;
-let valor = null;
-let clique = 1;
-let primeiraParte = ''
-let operador = ''
-let segundaParte = ''
-let estouNaSugundaParte = null
+let equals = document.getElementById('equals')
+let plus = document.getElementById('plus')
+let minus = document.getElementById('minus')
+let division = document.getElementById('division')
+let multiplication = document.getElementById('multiplication')
+let firstButton = null;
+let value = null;
+let click = 1;
+let firstPart = ''
+let operator = ''
+let secondPart = ''
+let isAtSecondPart = null
 
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        text.innerHTML += button.textContent;
 
-botoes.forEach(function (botao) {
-    botao.addEventListener('click', function () {
-
-        texto.innerHTML += botao.textContent;
-
-        console.log('primeiraParte', primeiraParte)
-
-        if (estouNaSugundaParte == 1) {
-            segundaParte = segundaParte + botao.textContent
-            console.log('segundaParte', segundaParte)
-        } else if (botao === mais || botao === menos || botao === divisao || botao === multiplicacao) {
-            if (botao.textContent == '+') {
-                operador = mais
-                estouNaSugundaParte = 1
-            } else if (botao.textContent == '-') {
-                operador = menos
-                estouNaSugundaParte = 1
-            } else if (botao.textContent == 'x') {
-                operador = multiplicacao
-                estouNaSugundaParte = 1
-            } else if (botao.textContent == ':') {
-                operador = divisao
-                estouNaSugundaParte = 1
-            }
-        } else {
-            primeiraParte = primeiraParte + botao.textContent
+        if (isAtSecondPart == 1) {
+            secondPart = secondPart + button.textContent
+        }else if (button === plus || button === minus || button === division || button === multiplication) {
+            operator = button;
+            isAtSecondPart = 1;
+          } else {
+            firstPart = firstPart + button.textContent
         }
 
     });
 });
 
 reset.addEventListener('click', function () {
-    texto.innerHTML = ''
-    primeiraParte = ''
-    segundaParte = ''
-    operador = ''
-    estouNaSugundaParte = 0
+    text.innerHTML = ''
+    firstPart = ''
+    secondPart = ''
+    operator = ''
+    isAtSecondPart = 0
 });
 
-igual.addEventListener('click', function () {
-    if (operador == mais) {
-        let soma = Number(primeiraParte) + Number(segundaParte)
-        texto.innerHTML = soma
-    } else if (operador == menos) {
-        let diminui = Number(primeiraParte) - Number(segundaParte)
-        texto.innerHTML = diminui
-    } else if (operador == multiplicacao) {
-        let multiplica = Number(primeiraParte) * Number(segundaParte)
-        texto.innerHTML = multiplica
-    } else if (operador == divisao) {
-        let divide = Number(primeiraParte) / Number(segundaParte)
-        texto.innerHTML = divide
+equals.addEventListener('click', function () {
+    let result;
+
+    if (operator == plus) {
+        result = Number(firstPart) + Number(secondPart)
+        text.innerHTML = result;
+    } else if (operator == minus) {
+        result = Number(firstPart) - Number(secondPart)
+        text.innerHTML = result;
+    } else if (operator == multiplication) {
+        result = Number(firstPart) * Number(secondPart)
+        text.innerHTML = result;
+    } else if (operator == division) {
+        result = Number(firstPart) / Number(secondPart)
+        text.innerHTML = result;
     }
-    estouNaSugundaParte = 0
+
+    firstPart = result; 
+    secondPart = ''; 
+    operator = ''; 
+    isAtSecondPart = 0; 
 });

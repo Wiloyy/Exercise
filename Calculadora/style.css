@@ -24,7 +24,7 @@ body{
     background-image: url('calculadora.avif');
 }
 
-.botoes {
+.buttons {
     background-color: #4CAF50;
     border-radius: 10px;
     border: none;
@@ -36,7 +36,7 @@ body{
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.botoes:hover {
+.buttons:hover {
     background-color: #3e8e41;
 }
 
@@ -55,7 +55,7 @@ body{
     background-color: #d32f2f;
 }
 
-#igual {
+#equals {
     background-color: #ff9800;
     border: none;
     padding: 20px;
@@ -66,7 +66,7 @@ body{
     grid-column: span 2;
 }
 
-#igual:hover {
+#equals:hover {
     background-color: #e68900;
 }
 
