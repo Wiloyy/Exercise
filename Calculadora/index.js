@@ -13,20 +13,25 @@ let firstPart = ''
 let operator = ''
 let secondPart = ''
 let isAtSecondPart = null
+let operatorClicked = true
 
 buttons.forEach(function (button) {
     button.addEventListener('click', function () {
         text.innerHTML += button.textContent;
-
         if (isAtSecondPart == 1) {
             secondPart = secondPart + button.textContent
-        } else if (button === plus || button === minus || button === division || button === multiplication) {
-            operator = button;
-            isAtSecondPart = 1;
+        } else if (operatorClicked == false) {
+            if (button === plus || button === minus || button === division || button === multiplication) {
+                operator = button;
+                isAtSecondPart = 1;
+                operatorClicked = true
+            } else {
+                firstPart = firstPart + button.textContent
+            }
         } else {
             firstPart = firstPart + button.textContent
+            operatorClicked = false
         }
-
     });
 });
 
@@ -60,3 +65,6 @@ equals.addEventListener('click', function () {
     operator = '';
     isAtSecondPart = 0;
 });
+
+
+
