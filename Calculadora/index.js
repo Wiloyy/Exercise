@@ -13,25 +13,33 @@ let firstPart = ''
 let operator = ''
 let secondPart = ''
 let isAtSecondPart = null
-let operatorClicked = true
+let firstClickExecuted = false
 
 buttons.forEach(function (button) {
     button.addEventListener('click', function () {
         text.innerHTML += button.textContent;
         if (isAtSecondPart == 1) {
             secondPart = secondPart + button.textContent
-        } else if (operatorClicked == false) {
+        } else if (firstClickExecuted == true) {
             if (button === plus || button === minus || button === division || button === multiplication) {
                 operator = button;
                 isAtSecondPart = 1;
-                operatorClicked = true
+                firstClickExecuted = false
             } else {
                 firstPart = firstPart + button.textContent
             }
         } else {
             firstPart = firstPart + button.textContent
-            operatorClicked = false
+            firstClickExecuted = true
         }
+        /*
+        console.log(`######`)
+        console.log('primeira', firstPart)
+        console.log('operador', operator)
+        console.log('segunda', secondPart)
+        console.log('isAtSecondPart', isAtSecondPart)
+        console.log('firstClickExecuted', firstClickExecuted)
+        */
     });
 });
 
@@ -41,11 +49,11 @@ reset.addEventListener('click', function () {
     secondPart = ''
     operator = ''
     isAtSecondPart = 0
+    firstClickExecuted = false
 });
 
 equals.addEventListener('click', function () {
     let result;
-
     if (operator == plus) {
         result = Number(firstPart) + Number(secondPart)
         text.innerHTML = result;
@@ -64,6 +72,15 @@ equals.addEventListener('click', function () {
     secondPart = '';
     operator = '';
     isAtSecondPart = 0;
+    firstClickExecuted = true
+    /*
+    console.log(`######`)
+    console.log('primeira', firstPart)
+    console.log('operador', operator)
+    console.log('segunda', secondPart)
+    console.log('isAtSecondPart', isAtSecondPart)
+    console.log('firstClickExecuted', firstClickExecuted)
+    */
 });
 
 
