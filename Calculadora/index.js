@@ -14,9 +14,16 @@ let operator = ''
 let secondPart = ''
 let isAtSecondPart = null
 let firstClickExecuted = false
+let operatorCliked = false
 
 buttons.forEach(function (button) {
     button.addEventListener('click', function () {
+        if (text.innerHTML === '') {
+            if (button === division || button === multiplication) {
+                return;
+            }
+        }
+
         text.innerHTML += button.textContent;
         if (isAtSecondPart == 1) {
             secondPart = secondPart + button.textContent
@@ -32,14 +39,13 @@ buttons.forEach(function (button) {
             firstPart = firstPart + button.textContent
             firstClickExecuted = true
         }
-        /*
         console.log(`######`)
         console.log('primeira', firstPart)
         console.log('operador', operator)
         console.log('segunda', secondPart)
         console.log('isAtSecondPart', isAtSecondPart)
         console.log('firstClickExecuted', firstClickExecuted)
-        */
+
     });
 });
 
@@ -82,6 +88,3 @@ equals.addEventListener('click', function () {
     console.log('firstClickExecuted', firstClickExecuted)
     */
 });
-
-
-
