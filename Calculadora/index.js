@@ -24,11 +24,16 @@ buttons.forEach(function (button) {
             }
         }
 
-        text.innerHTML += button.textContent;
         if (isAtSecondPart == 1) {
+            if(button === plus || button === minus || button === division || button === multiplication){
+                return;
+            }
             secondPart = secondPart + button.textContent
         } else if (firstClickExecuted == true) {
             if (button === plus || button === minus || button === division || button === multiplication) {
+                if(firstPart == '+' || firstPart == '-' ||  firstPart == 'x' || firstPart == ':' ){
+                    return;
+                }
                 operator = button;
                 isAtSecondPart = 1;
                 firstClickExecuted = false
@@ -39,6 +44,7 @@ buttons.forEach(function (button) {
             firstPart = firstPart + button.textContent
             firstClickExecuted = true
         }
+        text.innerHTML += button.textContent;
         console.log(`######`)
         console.log('primeira', firstPart)
         console.log('operador', operator)
