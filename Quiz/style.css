@@ -1,0 +1,30 @@
+h1 {
+    text-align: center;
+}
+
+.questionResponses {
+    display: none; /* Initially hidden */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Defines 2 columns */
+    gap: 10px; /* Space between buttons */
+}
+
+.options {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.options:hover {
+    background-color: aquamarine;
+}
+
+.next {
+    text-align: center;
+}
+
+p{
+    font-size: 25px;
+}
