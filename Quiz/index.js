@@ -1,147 +1,122 @@
+import { overwatchQuestions } from './quizz.js';
+
 let options = document.querySelectorAll('.options');
+let questionResponses = document.querySelectorAll('.questionResponses');
 let text = document.getElementById('text');
 let lilText = document.getElementById('lilText');
-let next = document.getElementById('next');
-let texto1 = document.getElementById('texto1');
-let reset = document.getElementById('reset');
-let volta = document.getElementById('volta');
-let overwatchQuestionCurrentIndex = 0;
-let pontuacao = 0;
-let gamePaused = false;
+let nextButton = document.getElementById('next');
+let resetButton = document.getElementById('reset');
+let backButton = document.getElementById('back');
+let start = document.getElementById('start');
 
-const overwatchQuestions = [
-    {
-        question: "Qual é o papel da Tracer no jogo?",
-        options: {
-            A: "Dano",
-            B: "Suporte",
-            C: "Tanque",
-            D: "Defesa"
-        },
-        answer: "A"
-    },
-    {
-        question: "Quantos heróis estão disponíveis no jogo?",
-        options: {
-            A: "Mais de 20",
-            B: "Mais de 30",
-            C: "Mais de 40",
-            D: "Menos de 20"
-        },
-        answer: "B"
-    },
-    {
-        question: "Qual é a função principal de um tanque?",
-        options: {
-            A: "Causar dano",
-            B: "Proteger aliados",
-            C: "Curar aliados",
-            D: "Capturar objetivos"
-        },
-        answer: "B"
-    },
-    {
-        question: "Qual é o objetivo principal em Overwatch?",
-        options: {
-            A: "Capturar pontos",
-            B: "Destruir o inimigo",
-            C: "Coletar recursos",
-            D: "Sobreviver"
-        },
-        answer: "A"
-    },
-    {
-        question: "Quem é o personagem conhecido como 'Reaper'?",
-        options: {
-            A: "Um suporte",
-            B: "Um dano",
-            C: "Um tanque",
-            D: "Um defensor"
-        },
-        answer: "B"
-    },
-    {
-        question: "Qual é a habilidade especial da D.Va?",
-        options: {
-            A: "Translocador",
-            B: "Ressuscitar",
-            C: "Cura em área",
-            D: "Self-Destruct"
-        },
-        answer: "D"
-    },
-    {
-        question: "Quem é o personagem que usa a habilidade 'Graviton Surge'?",
-        options: {
-            A: "Winston",
-            B: "Genji",
-            C: "Zarya",
-            D: "Pharah"
-        },
-        answer: "C"
-    }
-];
-next.innerHTML = 'Iniciar';
+let gamestate = {
+    overwatchQuestionCurrentIndex: 0,
+    score: 0,
+    gamePaused: false
+};
 
+nextButton.style.display = 'none'
+resetButton.style.display = 'none'
+backButton.style.display = 'none'
 
 options.forEach(function (option) {
     option.addEventListener('click', function () {
-        if (gamePaused === true) {
+        if (gamestate.gamePaused) {
             return;
         }
-        if (option.textContent === overwatchQuestions[index - 1].answer) {
+        if (option.textContent === overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
             text.innerHTML = 'Resposta confirmada, vá para a próxima pergunta';
-            pontuacao++;
+            gamestate.score++;
         } else {
             text.innerHTML = 'Resposta confirmada, vá para a próxima pergunta';
         }
-        gamePaused = true;
+        gamestate.gamePaused = true;
+        nextButton.style.display = 'block';
+        backButton.style.display = 'block'
     });
 });
 
-next.addEventListener('click', function () {
-    next.innerHTML = 'Próximo';
+
+start.addEventListener('click', function () {
+    if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
+        text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
+            ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
+            ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
+            ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
+            ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+        gamestate.gamePaused = false;
+    }
+    start.style.display = 'none';
+    nextButton.style.display = 'none'
+    resetButton.style.display = 'none'
+    backButton.style.display = 'none'
     lilText.innerHTML = '';
-    if (index < overwatchQuestions.length) {
-        text.innerHTML = overwatchQuestions[overwatchQuestionCurrentIndex].question +
-        ' A: ' + overwatchQuestions[overwatchQuestionCurrentIndex].options.A +
-        ' B: ' + overwatchQuestions[overwatchQuestionCurrentIndex].options.B +
-        ' C: ' + overwatchQuestions[overwatchQuestionCurrentIndex].options.C +
-        ' D: ' + overwatchQuestions[overwatchQuestionCurrentIndex].options.D;
-        overwatchQuestionCurrentIndex++;
-        gamePaused = false;
+    questionResponses.forEach(function (response) {
+        response.style.display = 'block';
+        response.style.display = 'grid';
+        response.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        response.style.gap = '10px'
+    })
+});
+
+
+nextButton.addEventListener('click', function () {
+    nextButton.innerHTML = 'Próximo';
+    lilText.innerHTML = '';
+    gamestate.overwatchQuestionCurrentIndex++;
+    if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
+        text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
+            ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
+            ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
+            ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
+            ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+        gamestate.gamePaused = false;
+        nextButton.style.display = 'none';
+        backButton.style.display = 'none';
     } else {
-        if (pontuacao === 1) {
-            text.innerHTML = `Você acertou ${pontuacao}, tá na hora de jogar mais Overwatch!`;
-        } else if (pontuacao > 1 && pontuacao <= 3) {
-            text.innerHTML = `Você acertou ${pontuacao}, você conhece bem o jogo, mas dá para melhorar!`;
-        } else if (pontuacao >= 4 && pontuacao <= 5) {
-            text.innerHTML = `Você acertou ${pontuacao}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
-        } else if (pontuacao === 0) {
-            text.innerHTML = `Você acertou ${pontuacao}, você não sabe nada sobre Overwatch!`;
-        } else if (pontuacao === 7) {
-            text.innerHTML = `Você acertou ${pontuacao}, você sabe tudo, parabéns!`;
+        if (gamestate.score === 1) {
+            text.innerHTML = `Você acertou ${gamestate.score}, tá na hora de jogar mais Overwatch!`;
+        } else if (gamestate.score > 1 && gamestate.score <= 3) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você conhece bem o jogo, mas dá para melhorar!`;
+        } else if (gamestate.score >= 4 && gamestate.score <= 5) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
+        } else if (gamestate.score === 0) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você não sabe nada sobre Overwatch!`;
+        } else if (gamestate.score === 7) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
         }
+        nextButton.style.display = 'none'
+        lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )'
     }
 });
 
-volta.addEventListener('click', function () {
-    if (index > 0) {
-        index--;
+backButton.addEventListener('click', function () {
+    if (gamestate.overwatchQuestionCurrentIndex > 0) {
+        gamestate.overwatchQuestionCurrentIndex--;
     }
-    text.innerHTML = overwatchQuestions[index].question +
-        ' A: ' + overwatchQuestions[index].options.A +
-        ' B: ' + overwatchQuestions[index].options.B +
-        ' C: ' + overwatchQuestions[index].options.C +
-        ' D: ' + overwatchQuestions[index].options.D;
+    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
+        ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
+        ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
+        ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
+        ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
 });
 
-reset.addEventListener('click', function () {
-    index = 0;
-    pontuacao = 0;
-    gamePaused = false;
+resetButton.addEventListener('click', function () {
+    gamestate.overwatchQuestionCurrentIndex = 0;
+    gamestate.score = 0;
+    gamestate.gamePaused = false;
 
-    next.innerHTML = 'Iniciar';
+    start.style.display = 'block';
+    nextButton.style.display = 'none'
+    resetButton.style.display = 'none'
+    backButton.style.display = 'none'
+
+    nextButton.innerHTML = 'proximo';
     lilText.innerHTML = 'Clique em iniciar para começar o quiz. Espero que você goste! :)';
-    text.innerHTML ='OVERWATCH Quiz!!'
+    text.innerHTML = 'OVERWATCH Quiz!!';
+
+    questionResponses.forEach(function (response) {
+        response.style.display = 'none';
+    })
+
 });
