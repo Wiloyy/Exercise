@@ -8,6 +8,7 @@ let nextButton = document.getElementById('next');
 let resetButton = document.getElementById('reset');
 let backButton = document.getElementById('back');
 let start = document.getElementById('start');
+let backToTheSame = document.getElementById('backToTheSame');
 
 let gamestate = {
     overwatchQuestionCurrentIndex: 0,
@@ -25,14 +26,15 @@ options.forEach(function (option) {
             return;
         }
         if (option.textContent === overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
-            text.innerHTML = 'Resposta confirmada, vá para a próxima pergunta';
+            text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
             gamestate.score++;
         } else {
-            text.innerHTML = 'Resposta confirmada, vá para a próxima pergunta';
+            text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
         }
         gamestate.gamePaused = true;
         nextButton.style.display = 'block';
         backButton.style.display = 'block'
+        backToTheSame.style.display = 'block'
     });
 });
 
@@ -50,6 +52,7 @@ start.addEventListener('click', function () {
     nextButton.style.display = 'none'
     resetButton.style.display = 'none'
     backButton.style.display = 'none'
+    backToTheSame.style.display = 'none'
     lilText.innerHTML = '';
     questionResponses.forEach(function (response) {
         response.style.display = 'block';
@@ -73,21 +76,29 @@ nextButton.addEventListener('click', function () {
         gamestate.gamePaused = false;
         nextButton.style.display = 'none';
         backButton.style.display = 'none';
+        backToTheSame.style.display = 'none'
     } else {
-        if (gamestate.score === 1) {
-            text.innerHTML = `Você acertou ${gamestate.score}, tá na hora de jogar mais Overwatch!`;
-        } else if (gamestate.score > 1 && gamestate.score <= 3) {
-            text.innerHTML = `Você acertou ${gamestate.score}, você conhece bem o jogo, mas dá para melhorar!`;
-        } else if (gamestate.score >= 4 && gamestate.score <= 5) {
-            text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
+        if (gamestate.score === 7) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
         } else if (gamestate.score === 0) {
             text.innerHTML = `Você acertou ${gamestate.score}, você não sabe nada sobre Overwatch!`;
-        } else if (gamestate.score === 7) {
-            text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
+        } else if (gamestate.score >= 1 && gamestate.score <= 3) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você tem uma noção do jogo, mas ainda tem muito para aprender!`;
+        } else if (gamestate.score >= 4 && gamestate.score <= 6) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
         }
+        
         nextButton.style.display = 'none'
+        backButton.style.display = 'none'
+        resetButton.style.display = 'block'
+        backToTheSame.style.display = 'none'
+        questionResponses.forEach(function (response) {
+            response.style.display = 'none';
+        })
         lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )'
     }
+
+
 });
 
 backButton.addEventListener('click', function () {
@@ -99,6 +110,10 @@ backButton.addEventListener('click', function () {
         ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
         ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
         ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+    gamestate.gamePaused = false;
+    backButton.style.display = 'none'
+    nextButton.style.display = 'none'
+    backToTheSame.style.display = 'none'
 });
 
 resetButton.addEventListener('click', function () {
@@ -110,6 +125,7 @@ resetButton.addEventListener('click', function () {
     nextButton.style.display = 'none'
     resetButton.style.display = 'none'
     backButton.style.display = 'none'
+    backToTheSame.style.display = 'none'
 
     nextButton.innerHTML = 'proximo';
     lilText.innerHTML = 'Clique em iniciar para começar o quiz. Espero que você goste! :)';
@@ -119,4 +135,16 @@ resetButton.addEventListener('click', function () {
         response.style.display = 'none';
     })
 
+});
+
+backToTheSame.addEventListener('click', function () {
+    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
+        ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
+        ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
+        ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
+        ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+    gamestate.gamePaused = false;
+    backButton.style.display = 'none'
+    nextButton.style.display = 'none'
+    backToTheSame.style.display = 'none'
 });

@@ -1,34 +1,44 @@
+body {
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
 h1 {
     text-align: center;
+    color: #333;
+    font-size: 36px;
 }
 
 .questionResponses {
     display: none;
-    /* Initially hidden */
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Defines 2 columns */
-    gap: 10px;
-    /* Space between buttons */
+    grid-template-columns: repeat(2, 1fr); 
 }
 
 .options {
-    background-color: #f0f0f0;
-    border: none;
+    background-color: #ffffff;
+    border: 2px solid #007BFF; 
+    border-radius: 8px; 
     padding: 20px;
     font-size: 24px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .options:hover {
-    background-color: aquamarine;
+    background-color: rgb(241, 241, 241);
+    transform: scale(1.05); 
 }
 
 .next {
     text-align: center;
+    margin-top: 20px;
 }
 
 p {
     font-size: 25px;
+    color: #666; 
+    margin-bottom: 15px;
 }
-

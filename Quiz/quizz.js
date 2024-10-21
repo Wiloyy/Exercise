@@ -1,6 +1,6 @@
 export const overwatchQuestions = [
     {
-        question: "Qual é o papel da Tracer no jogo?",
+        question: "1) Qual é o papel da Tracer no jogo?",
         options: {
             A: "Dano",
             B: "Suporte",
@@ -10,7 +10,7 @@ export const overwatchQuestions = [
         answer: "A"
     },
     {
-        question: "Quantos heróis estão disponíveis no jogo?",
+        question: "2) Quantos heróis estão disponíveis no jogo?",
         options: {
             A: "Mais de 20",
             B: "Mais de 30",
@@ -20,7 +20,7 @@ export const overwatchQuestions = [
         answer: "B"
     },
     {
-        question: "Qual é a função principal de um tanque?",
+        question: "3) Qual é a função principal de um tanque?",
         options: {
             A: "Causar dano",
             B: "Proteger aliados",
@@ -30,7 +30,7 @@ export const overwatchQuestions = [
         answer: "B"
     },
     {
-        question: "Qual é o objetivo principal em Overwatch?",
+        question: "4) Qual é o objetivo principal em Overwatch?",
         options: {
             A: "Capturar pontos",
             B: "Destruir o inimigo",
@@ -40,7 +40,7 @@ export const overwatchQuestions = [
         answer: "A"
     },
     {
-        question: "Quem é o personagem conhecido como 'Reaper'?",
+        question: "5) Quem é o personagem conhecido como 'Reaper'?",
         options: {
             A: "Um suporte",
             B: "Um dano",
@@ -50,7 +50,7 @@ export const overwatchQuestions = [
         answer: "B"
     },
     {
-        question: "Qual é a habilidade especial da D.Va?",
+        question: "6) Qual é a habilidade especial da D.Va?",
         options: {
             A: "Translocador",
             B: "Ressuscitar",
@@ -60,7 +60,7 @@ export const overwatchQuestions = [
         answer: "D"
     },
     {
-        question: "Quem é o personagem que usa a habilidade 'Graviton Surge'?",
+        question: "7) Quem é o personagem que usa a habilidade 'Graviton Surge'?",
         options: {
             A: "Winston",
             B: "Genji",
