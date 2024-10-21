@@ -1,6 +1,6 @@
 import { overwatchQuestions } from './quizz.js';
 
-let options = document.querySelectorAll('.options2');
+let options = document.querySelectorAll('.options');
 let questionResponses = document.querySelectorAll('.questionResponses');
 let text = document.getElementById('text');
 let lilText = document.getElementById('lilText');
