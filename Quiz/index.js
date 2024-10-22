@@ -7,6 +7,14 @@ let lilText = document.getElementById('lilText');
 let nextButton = document.getElementById('next');
 let resetButton = document.getElementById('reset');
 let backButton = document.getElementById('back');
+let optionA = document.getElementById('optionA');
+optionA.letter = 'A';
+let optionB = document.getElementById('optionB');
+optionB.letter = 'B';
+let optionC = document.getElementById('optionC');
+optionC.letter = 'C';
+let optionD = document.getElementById('optionD');
+optionD.letter = 'D';
 let start = document.getElementById('start');
 let backToTheSame = document.getElementById('backToTheSame');
 
@@ -16,16 +24,17 @@ let gamestate = {
     gamePaused: false
 };
 
-nextButton.style.display = 'none'
-resetButton.style.display = 'none'
-backButton.style.display = 'none'
+nextButton.style.display = 'none';
+resetButton.style.display = 'none';
+backButton.style.display = 'none';
 
 options.forEach(function (option) {
     option.addEventListener('click', function () {
         if (gamestate.gamePaused) {
             return;
         }
-        if (option.textContent === overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
+        overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = option.letter;
+        if (option.letter === overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
             text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
             gamestate.score++;
         } else {
@@ -33,51 +42,46 @@ options.forEach(function (option) {
         }
         gamestate.gamePaused = true;
         nextButton.style.display = 'block';
-        backButton.style.display = 'block'
-        backToTheSame.style.display = 'block'
+        backButton.style.display = 'block';
+        backToTheSame.style.display = 'block';
     });
 });
 
-
 start.addEventListener('click', function () {
     if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
-        text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
-            ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
-            ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
-            ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
-            ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+        mostraTexto();
         gamestate.gamePaused = false;
     }
     start.style.display = 'none';
-    nextButton.style.display = 'none'
-    resetButton.style.display = 'none'
-    backButton.style.display = 'none'
-    backToTheSame.style.display = 'none'
+    nextButton.style.display = 'none';
+    resetButton.style.display = 'none';
+    backButton.style.display = 'none';
+    backToTheSame.style.display = 'none';
     lilText.innerHTML = '';
     questionResponses.forEach(function (response) {
         response.style.display = 'block';
         response.style.display = 'grid';
         response.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        response.style.gap = '10px'
-    })
+        response.style.gap = '10px';
+    });
 });
-
 
 nextButton.addEventListener('click', function () {
     nextButton.innerHTML = 'Próximo';
     lilText.innerHTML = '';
     gamestate.overwatchQuestionCurrentIndex++;
     if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
-        text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
-            ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
-            ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
-            ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
-            ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+        mostraTexto();
         gamestate.gamePaused = false;
         nextButton.style.display = 'none';
         backButton.style.display = 'none';
-        backToTheSame.style.display = 'none'
+        backToTheSame.style.display = 'none';
     } else {
+        options.forEach(function (option) {
+            if (overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice == overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
+                gamestate.score++;
+            }
+        });
         if (gamestate.score === 7) {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
         } else if (gamestate.score === 0) {
@@ -87,33 +91,27 @@ nextButton.addEventListener('click', function () {
         } else if (gamestate.score >= 4 && gamestate.score <= 6) {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
         }
-        
-        nextButton.style.display = 'none'
-        backButton.style.display = 'none'
-        resetButton.style.display = 'block'
-        backToTheSame.style.display = 'none'
+
+        nextButton.style.display = 'none';
+        backButton.style.display = 'none';
+        resetButton.style.display = 'block';
+        backToTheSame.style.display = 'none';
         questionResponses.forEach(function (response) {
             response.style.display = 'none';
-        })
-        lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )'
+        });
+        lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )';
     }
-
-
 });
 
 backButton.addEventListener('click', function () {
     if (gamestate.overwatchQuestionCurrentIndex > 0) {
         gamestate.overwatchQuestionCurrentIndex--;
     }
-    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
-        ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
-        ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
-        ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
-        ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+    mostraTexto();
     gamestate.gamePaused = false;
-    backButton.style.display = 'none'
-    nextButton.style.display = 'none'
-    backToTheSame.style.display = 'none'
+    backButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    backToTheSame.style.display = 'none';
 });
 
 resetButton.addEventListener('click', function () {
@@ -122,29 +120,33 @@ resetButton.addEventListener('click', function () {
     gamestate.gamePaused = false;
 
     start.style.display = 'block';
-    nextButton.style.display = 'none'
-    resetButton.style.display = 'none'
-    backButton.style.display = 'none'
-    backToTheSame.style.display = 'none'
+    nextButton.style.display = 'none';
+    resetButton.style.display = 'none';
+    backButton.style.display = 'none';
+    backToTheSame.style.display = 'none';
 
-    nextButton.innerHTML = 'proximo';
+    nextButton.innerHTML = 'Próximo';
     lilText.innerHTML = 'Clique em iniciar para começar o quiz. Espero que você goste! :)';
     text.innerHTML = 'OVERWATCH Quiz!!';
 
     questionResponses.forEach(function (response) {
         response.style.display = 'none';
-    })
-
+    });
 });
 
 backToTheSame.addEventListener('click', function () {
-    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question +
-        ' A: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.A +
-        ' B: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.B +
-        ' C: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.C +
-        ' D: ' + overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options.D;
+    mostraTexto();
     gamestate.gamePaused = false;
-    backButton.style.display = 'none'
-    nextButton.style.display = 'none'
-    backToTheSame.style.display = 'none'
+    backButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    backToTheSame.style.display = 'none';
 });
+
+function mostraTexto() {
+    var option = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options;
+    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question;
+    optionA.textContent = `A: ${option.A}`;
+    optionB.textContent = `B: ${option.B}`;
+    optionC.textContent = `C: ${option.C}`;
+    optionD.textContent = `D: ${option.D}`;
+}

@@ -1,4 +1,4 @@
-export const overwatchQuestions = [
+export var overwatchQuestions = [
     {
         question: "1) Qual é o papel da Tracer no jogo?",
         options: {
