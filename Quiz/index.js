@@ -1,6 +1,5 @@
 import { overwatchQuestions } from './quizz.js';
 
-let options = document.querySelectorAll('.options');
 let questionResponses = document.querySelectorAll('.questionResponses');
 let text = document.getElementById('text');
 let lilText = document.getElementById('lilText');
@@ -15,6 +14,8 @@ let optionC = document.getElementById('optionC');
 optionC.letter = 'C';
 let optionD = document.getElementById('optionD');
 optionD.letter = 'D';
+
+let options = [optionA, optionB, optionC, optionD]
 let start = document.getElementById('start');
 let backToTheSame = document.getElementById('backToTheSame');
 
@@ -34,12 +35,8 @@ options.forEach(function (option) {
             return;
         }
         overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = option.letter;
-        if (option.letter === overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
-            text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
-            gamestate.score++;
-        } else {
-            text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
-        }
+        text.innerHTML = `Sua resposta foi '${option.textContent}'. Você pode seguir para a próxima pergunta ou voltar e alterar sua resposta.`;
+
         gamestate.gamePaused = true;
         nextButton.style.display = 'block';
         backButton.style.display = 'block';
@@ -70,18 +67,23 @@ nextButton.addEventListener('click', function () {
     nextButton.innerHTML = 'Próximo';
     lilText.innerHTML = '';
     gamestate.overwatchQuestionCurrentIndex++;
+
     if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
         mostraTexto();
         gamestate.gamePaused = false;
         nextButton.style.display = 'none';
         backButton.style.display = 'none';
         backToTheSame.style.display = 'none';
+        console.log(overwatchQuestions[gamestate.overwatchQuestionCurrentIndex])
+        console.log(gamestate.overwatchQuestionCurrentIndex)
     } else {
-        options.forEach(function (option) {
-            if (overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice == overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].answer) {
-                gamestate.score++;
+        overwatchQuestions.forEach(function (question) {
+            console.log(question)
+            if (question.answer == question.choice) {
+                gamestate.score++
             }
-        });
+        })
+
         if (gamestate.score === 7) {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
         } else if (gamestate.score === 0) {
@@ -92,6 +94,7 @@ nextButton.addEventListener('click', function () {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
         }
 
+        // Atualização da interface
         nextButton.style.display = 'none';
         backButton.style.display = 'none';
         resetButton.style.display = 'block';
@@ -102,6 +105,7 @@ nextButton.addEventListener('click', function () {
         lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )';
     }
 });
+
 
 backButton.addEventListener('click', function () {
     if (gamestate.overwatchQuestionCurrentIndex > 0) {
