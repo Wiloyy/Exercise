@@ -1,0 +1,13 @@
+body {
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.botao {
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 5px;
+}
