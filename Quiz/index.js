@@ -7,13 +7,9 @@ let nextButton = document.getElementById('next');
 let resetButton = document.getElementById('reset');
 let backButton = document.getElementById('back');
 let optionA = document.getElementById('optionA');
-optionA.letter = 'A';
 let optionB = document.getElementById('optionB');
-optionB.letter = 'B';
 let optionC = document.getElementById('optionC');
-optionC.letter = 'C';
 let optionD = document.getElementById('optionD');
-optionD.letter = 'D';
 
 let options = [optionA, optionB, optionC, optionD];
 let start = document.getElementById('start');
@@ -26,11 +22,12 @@ let gamestate = {
     penultimateButton: null
 };
 
+
 nextButton.style.display = 'none';
 resetButton.style.display = 'none';
 backButton.style.display = 'none';
 
-options.forEach(function (option) {
+options.forEach(function (option, indice) {
     option.style.color = 'black';
     option.addEventListener('click', function () {
         gamestate.penultimateButton = gamestate.lastButtonClicked;
@@ -40,11 +37,15 @@ options.forEach(function (option) {
             gamestate.penultimateButton.style.color = 'black';
         }
 
+        overwatchQuestions.forEach(function (question) {
+            console.log(question.answer)
+        })
         console.log(gamestate.penultimateButton)
         console.log(gamestate.lastButtonClicked)
-        
+
         option.style.color = 'green';
-        overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = option.letter;
+        overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = indice
+        console.log(indice)
         cleanOption();
     });
 });
@@ -65,21 +66,24 @@ nextButton.addEventListener('click', function () {
         resetOptionsColor();
         mostraTexto();
         cleanNext1();
+        console.log(gamestate.overwatchQuestionCurrentIndex)
     } else {
         overwatchQuestions.forEach(function (question) {
-            if (question.answer == question.choice) {
-                gamestate.score++;
+            if (question.options[question.choice].correct == true) {
+                gamestate.score++
             }
         });
 
-        if (gamestate.score === 7) {
+        if (gamestate.score === 15) {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
         } else if (gamestate.score === 0) {
             text.innerHTML = `Você acertou ${gamestate.score}, você não sabe nada sobre Overwatch!`;
-        } else if (gamestate.score >= 1 && gamestate.score <= 3) {
+        } else if (gamestate.score >= 1 && gamestate.score <= 5) {
             text.innerHTML = `Você acertou ${gamestate.score}, você tem uma noção do jogo, mas ainda tem muito para aprender!`;
-        } else if (gamestate.score >= 4 && gamestate.score <= 6) {
+        } else if (gamestate.score >= 6 && gamestate.score <= 10) {
             text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
+        } else if (gamestate.score >= 11 && gamestate.score <= 14) {
+            text.innerHTML = `Você acertou ${gamestate.score}, você é um verdadeiro conhecedor de Overwatch!`;
         }
 
         cleanNext2();
@@ -114,14 +118,14 @@ resetButton.addEventListener('click', function () {
 });
 
 function mostraTexto() {
-    var option = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].options;
-    text.innerHTML = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].question;
-    optionA.textContent = `A: ${option.A}`;
-    optionB.textContent = `B: ${option.B}`;
-    optionC.textContent = `C: ${option.C}`;
-    optionD.textContent = `D: ${option.D}`;
-}
+    const arrayOverwatchQuestions = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex];
+    text.innerHTML = arrayOverwatchQuestions.question;
 
+    optionA.textContent = `A: ${arrayOverwatchQuestions.options[0].description}`;
+    optionB.textContent = `B: ${arrayOverwatchQuestions.options[1].description}`;
+    optionC.textContent = `C: ${arrayOverwatchQuestions.options[2].description}`;
+    optionD.textContent = `D: ${arrayOverwatchQuestions.options[3].description}`;
+}
 function resetOptionsColor() {
     options.forEach(function (option) {
         option.style.color = 'black';
@@ -175,3 +179,16 @@ function cleanOption() {
     nextButton.style.display = 'block';
     backButton.style.display = 'block';
 }
+
+function geraPerguntaAleatoria(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let random = Math.floor(Math.random() * (i + 1));
+        [array[i], array[random]] = [array[random], array[i]]
+    }
+}
+
+geraPerguntaAleatoria(overwatchQuestions)
+
+overwatchQuestions.forEach(function (question) {
+    geraPerguntaAleatoria(question.options);
+});
