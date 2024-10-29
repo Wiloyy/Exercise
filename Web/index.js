@@ -7,18 +7,18 @@ function enter() {
 
     novoTitulo.innerHTML = 'Seja Bem-Vindo';
     novoParagrafo.innerHTML = 'Escolha um jogo para jogar';
-    
+
     botaoAdivinhacao.id = 'jogoAdivinhacao';
     botaoAdivinhacao.innerHTML = 'Jogo da Adivinhação';
-    botaoAdivinhacao.classList.add('botao'); 
+    botaoAdivinhacao.classList.add('botao');
 
-    botaoMemoria.id = 'jogoMemoria'; 
-    botaoMemoria.innerHTML = 'Jogo da Memória'; 
-    botaoMemoria.classList.add('botao'); 
+    botaoMemoria.id = 'jogoMemoria';
+    botaoMemoria.innerHTML = 'Jogo da Memória';
+    botaoMemoria.classList.add('botao');
 
     botaoQuizz.id = 'jogoQuizz';
     botaoQuizz.innerHTML = 'Quizz';
-    botaoQuizz.classList.add('botao'); 
+    botaoQuizz.classList.add('botao');
 
     novoParagrafo.style.fontSize = '30px';
     novoTitulo.style.textAlign = 'center';
@@ -32,23 +32,25 @@ function enter() {
 }
 
 function leave() {
-   
+
 }
 
 enter();
 
 const botaoAdivinhacao = document.getElementById('jogoAdivinhacao');
-const botaoMemoria = document.getElementById('jogoMemoria'); 
+const botaoMemoria = document.getElementById('jogoMemoria');
 const botaoQuizz = document.getElementById('jogoQuizz');
 
 botaoAdivinhacao.addEventListener('click', function() {
-   
+
 });
 
 botaoMemoria.addEventListener('click', function() {
     alert('Você escolheu o Jogo da Memória!');
 });
 
+import { enter1 as meuenter } from './quizz.js'
+
 botaoQuizz.addEventListener('click', function() {
-    window.location.href = 'quizz.js';
+    meuenter();
 });
