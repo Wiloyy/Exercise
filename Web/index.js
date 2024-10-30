@@ -1,4 +1,6 @@
-function enter() {
+import { enter as enterQuizz } from './quizz.js';
+
+export function enter() {
     const novoTitulo = document.createElement('h1');
     const novoParagrafo = document.createElement('p');
     const botaoAdivinhacao = document.createElement('button');
@@ -29,28 +31,39 @@ function enter() {
     document.body.appendChild(botaoAdivinhacao);
     document.body.appendChild(botaoMemoria);
     document.body.appendChild(botaoQuizz);
+
+    botaoAdivinhacao.addEventListener('click', function() {
+
+    });
+
+    botaoMemoria.addEventListener('click', function() {
+
+    });
+
+    botaoQuizz.addEventListener('click', function() {
+        leave();
+        enterQuizz();
+    });
 }
 
 function leave() {
+    const titulo = document.querySelector('h1');
+    const paragrafo = document.querySelector('p');
+    const botoes = document.querySelectorAll('button');
 
+    if (titulo) {
+        titulo.style.display = 'none';
+    }
+    
+    if (paragrafo) {
+        paragrafo.style.display = 'none';
+    }
+    
+    if (botoes) {
+        botoes.forEach(function(botao) {
+            botao.style.display = 'none';
+        });
+    }
 }
 
 enter();
-
-const botaoAdivinhacao = document.getElementById('jogoAdivinhacao');
-const botaoMemoria = document.getElementById('jogoMemoria');
-const botaoQuizz = document.getElementById('jogoQuizz');
-
-botaoAdivinhacao.addEventListener('click', function() {
-
-});
-
-botaoMemoria.addEventListener('click', function() {
-    alert('Você escolheu o Jogo da Memória!');
-});
-
-import { enter1 as meuenter } from './quizz.js'
-
-botaoQuizz.addEventListener('click', function() {
-    meuenter();
-});

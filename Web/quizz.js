@@ -1,11 +1,32 @@
-export function enter1() {
+import { enter as enterMenu } from './index.js';
 
-let novoParagrafo = document.createElement('h1')
-novoParagrafo.innerHTML = 'ola'
-document.body.appendChild(novoParagrafo);
+export function enter() {
+    document.body.innerHTML = '';
 
+    const quizzTitulo = document.createElement('h2');
+    quizzTitulo.innerHTML = 'Bem-vindo ao Quizz!';
+
+    const voltarMenu = document.createElement('button');
+    voltarMenu.innerHTML = 'Voltar ao Menu';
+    voltarMenu.classList.add('botao');
+
+    document.body.appendChild(quizzTitulo);
+    document.body.appendChild(voltarMenu);
+
+    voltarMenu.addEventListener('click', function() {
+        leaveQuizz();
+        enterMenu();
+    });
 }
 
-function leave() {
+function leaveQuizz() {
+    const quizzTitulo = document.querySelector('h2');
+    const voltarMenu = document.querySelector('button');
 
+    if (quizzTitulo){
+        quizzTitulo.style.display = 'none';
+    }
+    if (voltarMenu) {
+        voltarMenu.style.display = 'none';
+    }
 }
