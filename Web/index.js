@@ -1,11 +1,11 @@
-import { enter as enterQuizz } from './quizz.js';
+import { enter as enterToDo } from './toDo.js';
 
 export function enter() {
     const novoTitulo = document.createElement('h1');
     const novoParagrafo = document.createElement('p');
     const botaoAdivinhacao = document.createElement('button');
     const botaoMemoria = document.createElement('button');
-    const botaoQuizz = document.createElement('button');
+    const botaoToDo = document.createElement('button');
 
     novoTitulo.innerHTML = 'Seja Bem-Vindo';
     novoParagrafo.innerHTML = 'Escolha um jogo para jogar';
@@ -18,9 +18,9 @@ export function enter() {
     botaoMemoria.innerHTML = 'Jogo da Memória';
     botaoMemoria.classList.add('botao');
 
-    botaoQuizz.id = 'jogoQuizz';
-    botaoQuizz.innerHTML = 'Quizz';
-    botaoQuizz.classList.add('botao');
+    botaoToDo.id = 'jogoToDo';
+    botaoToDo.innerHTML = 'ToDo';
+    botaoToDo.classList.add('botao');
 
     novoParagrafo.style.fontSize = '30px';
     novoTitulo.style.textAlign = 'center';
@@ -30,7 +30,7 @@ export function enter() {
     document.body.appendChild(novoParagrafo);
     document.body.appendChild(botaoAdivinhacao);
     document.body.appendChild(botaoMemoria);
-    document.body.appendChild(botaoQuizz);
+    document.body.appendChild(botaoToDo);
 
     botaoAdivinhacao.addEventListener('click', function() {
 
@@ -40,9 +40,9 @@ export function enter() {
 
     });
 
-    botaoQuizz.addEventListener('click', function() {
+    botaoToDo.addEventListener('click', function() {
         leave();
-        enterQuizz();
+        enterToDo();
     });
 }
 
