@@ -1,4 +1,7 @@
 import { enter as enterToDo } from './toDo.js';
+import {init} from './score.js'
+import {enterJogoDaVelha} from './jogoDaVelha.js'
+import { enter as enterQuizz } from './quizz.js';
 
 export function enter() {
     const novoTitulo = document.createElement('h1');
@@ -10,12 +13,12 @@ export function enter() {
     novoTitulo.innerHTML = 'Seja Bem-Vindo';
     novoParagrafo.innerHTML = 'Escolha um jogo para jogar';
 
-    botaoAdivinhacao.id = 'jogoAdivinhacao';
-    botaoAdivinhacao.innerHTML = 'Jogo da Adivinhação';
+    botaoAdivinhacao.id = 'jogoQuizz';
+    botaoAdivinhacao.innerHTML = 'Quizz';
     botaoAdivinhacao.classList.add('botao');
 
-    botaoMemoria.id = 'jogoMemoria';
-    botaoMemoria.innerHTML = 'Jogo da Memória';
+    botaoMemoria.id = 'jogoDaVelha';
+    botaoMemoria.innerHTML = 'Jogo da velha';
     botaoMemoria.classList.add('botao');
 
     botaoToDo.id = 'jogoToDo';
@@ -33,11 +36,13 @@ export function enter() {
     document.body.appendChild(botaoToDo);
 
     botaoAdivinhacao.addEventListener('click', function() {
-
+        leave()
+        enterQuizz()
     });
 
     botaoMemoria.addEventListener('click', function() {
-
+        leave()
+        enterJogoDaVelha()
     });
 
     botaoToDo.addEventListener('click', function() {
@@ -67,3 +72,4 @@ function leave() {
 }
 
 enter();
+init()

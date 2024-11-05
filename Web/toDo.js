@@ -1,7 +1,10 @@
 import { enter as enterMenu } from './index.js';
+import { init } from './score.js';
 
 export function enter() {
     document.body.innerHTML = '';
+    
+init()
 
     const texto = document.createElement('p')
     const botaoToDo = document.createElement('button');
@@ -14,6 +17,7 @@ export function enter() {
     botaoToDo.innerHTML = '+';
 
     voltarMenu.classList.add('botaoVolta');
+
     botaoToDo.classList.add('botaoToDo');
     inputToDo.classList.add('inputToDo');
     paragrafo.id = 'paragrafo';
