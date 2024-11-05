@@ -3,41 +3,41 @@ import { init } from './score.js';
 
 export function enter() {
     document.body.innerHTML = '';
-    
-init()
 
-    const texto = document.createElement('p')
-    const botaoToDo = document.createElement('button');
-    const inputToDo = document.createElement('input');
-    const paragrafo = document.createElement('div');
-    const voltarMenu = document.createElement('button');
+    init();
 
-    voltarMenu.innerHTML = 'Voltar ao Menu';
-    texto.innerHTML = 'Escreva uma tarefa'
-    botaoToDo.innerHTML = '+';
+    const text = document.createElement('p');
+    const addButton = document.createElement('button');
+    const inputTask = document.createElement('input');
+    const taskContainer = document.createElement('div');
+    const backToMenuButton = document.createElement('button');
 
-    voltarMenu.classList.add('botaoVolta');
+    backToMenuButton.innerHTML = 'Voltar ao Menu';
+    text.innerHTML = 'Escreva uma tarefa';
+    addButton.innerHTML = '+';
 
-    botaoToDo.classList.add('botaoToDo');
-    inputToDo.classList.add('inputToDo');
-    paragrafo.id = 'paragrafo';
+    backToMenuButton.classList.add('botaoVolta');
 
-    document.body.appendChild(voltarMenu);
-    document.body.appendChild(inputToDo);
-    document.body.appendChild(botaoToDo);
-    document.body.appendChild(paragrafo);
-    document.body.appendChild(texto);
+    addButton.classList.add('botaoToDo');
+    inputTask.classList.add('inputToDo');
+    taskContainer.id = 'taskContainer';
 
-    voltarMenu.addEventListener('click', function() {
+    document.body.appendChild(backToMenuButton);
+    document.body.appendChild(inputTask);
+    document.body.appendChild(addButton);
+    document.body.appendChild(taskContainer);
+    document.body.appendChild(text);
+
+    backToMenuButton.addEventListener('click', function() {
         leaveToDo();
         enterMenu();
     });
 
-    botaoToDo.addEventListener('click', function() {
-        const valor = inputToDo.value;
-        if (valor) {
-            adicionaTarefa(valor, 'X', 'V', paragrafo);
-            inputToDo.value = '';
+    addButton.addEventListener('click', function() {
+        const value = inputTask.value;
+        if (value) {
+            addTask(value, 'X', 'V', taskContainer);
+            inputTask.value = '';
         }
     });
 }
@@ -46,31 +46,31 @@ function leaveToDo() {
     document.body.innerHTML = '';
 }
 
-function adicionaTarefa(tarefa, botoes, botoes2) {
-    const paragrafo = document.getElementById('paragrafo')
-    const novoParagrafo = document.createElement('div');
-    const botaoX = document.createElement('button');
-    const botaoV = document.createElement('button');
-    novoParagrafo.textContent = tarefa;
-    botaoX.textContent = botoes;
-    botaoV.textContent = botoes2;
-    novoParagrafo.style.color = "red";
-    novoParagrafo.appendChild(botaoX)
-    novoParagrafo.appendChild(botaoV)
-    paragrafo.appendChild(novoParagrafo);
-    
+function addTask(task, button1Text, button2Text, taskContainer) {
+    const taskParagraph = document.getElementById('taskContainer');
+    const newTask = document.createElement('div');
+    const buttonX = document.createElement('button');
+    const buttonV = document.createElement('button');
 
-    botaoX.addEventListener('click', function () {
-        paragrafo.removeChild(novoParagrafo);
-    })
+    newTask.textContent = task;
+    buttonX.textContent = button1Text;
+    buttonV.textContent = button2Text;
 
-    botaoV.addEventListener('click', function () {
-        console.log(novoParagrafo.style.color)
-        if(novoParagrafo.style.color  === 'red'){
-           novoParagrafo.style.color = 'green'
-        } else if (novoParagrafo.style.color  === 'green') {
-            novoParagrafo.style.color = 'red'
+    newTask.style.color = "red";
+    newTask.appendChild(buttonX);
+    newTask.appendChild(buttonV);
+    taskParagraph.appendChild(newTask);
+
+    buttonX.addEventListener('click', function () {
+        taskParagraph.removeChild(newTask);
+    });
+
+    buttonV.addEventListener('click', function () {
+        console.log(newTask.style.color);
+        if (newTask.style.color === 'red') {
+            newTask.style.color = 'green';
+        } else if (newTask.style.color === 'green') {
+            newTask.style.color = 'red';
         }
-    })
-    
+    });
 }

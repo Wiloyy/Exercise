@@ -1,75 +1,75 @@
 import { enter as enterToDo } from './toDo.js';
-import {init} from './score.js'
-import {enterJogoDaVelha} from './jogoDaVelha.js'
+import { init } from './score.js';
+import { enterTicTacToe } from './jogoDaVelha.js';
 import { enter as enterQuizz } from './quizz.js';
 
 export function enter() {
-    const novoTitulo = document.createElement('h1');
-    const novoParagrafo = document.createElement('p');
-    const botaoAdivinhacao = document.createElement('button');
-    const botaoMemoria = document.createElement('button');
-    const botaoToDo = document.createElement('button');
+    const newTitle = document.createElement('h1');
+    const newParagraph = document.createElement('p');
+    const buttonQuiz = document.createElement('button');
+    const buttonTicTacToe = document.createElement('button');
+    const buttonToDo = document.createElement('button');
 
-    novoTitulo.innerHTML = 'Seja Bem-Vindo';
-    novoParagrafo.innerHTML = 'Escolha um jogo para jogar';
+    newTitle.innerHTML = 'Welcome';
+    newParagraph.innerHTML = 'Choose a game to play';
 
-    botaoAdivinhacao.id = 'jogoQuizz';
-    botaoAdivinhacao.innerHTML = 'Quizz';
-    botaoAdivinhacao.classList.add('botao');
+    buttonQuiz.id = 'quizGame';
+    buttonQuiz.innerHTML = 'Quiz';
+    buttonQuiz.classList.add('button');
 
-    botaoMemoria.id = 'jogoDaVelha';
-    botaoMemoria.innerHTML = 'Jogo da velha';
-    botaoMemoria.classList.add('botao');
+    buttonTicTacToe.id = 'ticTacToeGame';
+    buttonTicTacToe.innerHTML = 'Jogo da Velha';
+    buttonTicTacToe.classList.add('button');
 
-    botaoToDo.id = 'jogoToDo';
-    botaoToDo.innerHTML = 'ToDo';
-    botaoToDo.classList.add('botao');
+    buttonToDo.id = 'toDoGame';
+    buttonToDo.innerHTML = 'ToDo';
+    buttonToDo.classList.add('button');
 
-    novoParagrafo.style.fontSize = '30px';
-    novoTitulo.style.textAlign = 'center';
-    novoParagrafo.style.textAlign = 'center';
+    newParagraph.style.fontSize = '30px';
+    newTitle.style.textAlign = 'center';
+    newParagraph.style.textAlign = 'center';
 
-    document.body.appendChild(novoTitulo);
-    document.body.appendChild(novoParagrafo);
-    document.body.appendChild(botaoAdivinhacao);
-    document.body.appendChild(botaoMemoria);
-    document.body.appendChild(botaoToDo);
+    document.body.appendChild(newTitle);
+    document.body.appendChild(newParagraph);
+    document.body.appendChild(buttonQuiz);
+    document.body.appendChild(buttonTicTacToe);
+    document.body.appendChild(buttonToDo);
 
-    botaoAdivinhacao.addEventListener('click', function() {
-        leave()
-        enterQuizz()
+    buttonQuiz.addEventListener('click', function() {
+        leave();
+        enterQuizz();
     });
 
-    botaoMemoria.addEventListener('click', function() {
-        leave()
-        enterJogoDaVelha()
+    buttonTicTacToe.addEventListener('click', function() {
+        leave();
+        enterTicTacToe();
     });
 
-    botaoToDo.addEventListener('click', function() {
+    buttonToDo.addEventListener('click', function() {
         leave();
         enterToDo();
     });
 }
 
 function leave() {
-    const titulo = document.querySelector('h1');
-    const paragrafo = document.querySelector('p');
-    const botoes = document.querySelectorAll('button');
+    const title = document.querySelector('h1');
+    const paragraph = document.querySelector('p');
+    const buttons = document.querySelectorAll('button');
 
-    if (titulo) {
-        titulo.style.display = 'none';
+    if (title) {
+        title.style.display = 'none';
     }
-    
-    if (paragrafo) {
-        paragrafo.style.display = 'none';
+
+    if (paragraph) {
+        paragraph.style.display = 'none';
     }
-    
-    if (botoes) {
-        botoes.forEach(function(botao) {
-            botao.style.display = 'none';
+
+    if (buttons) {
+        buttons.forEach(function(button) {
+            button.style.display = 'none';
         });
     }
 }
 
 enter();
-init()
+init();

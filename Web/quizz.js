@@ -1,5 +1,6 @@
 import { overwatchQuestions } from "./overwatch.js";
 import { enter as enterMenu } from './index.js';
+import { init } from './score.js';
 
 const gamestate = {
     overwatchQuestionCurrentIndex: 0,
@@ -10,10 +11,10 @@ const gamestate = {
 }
 
 export function enter() {
-    const voltarMenu = document.createElement('button');
-    voltarMenu.innerHTML = 'Voltar ao Menu';
-    voltarMenu.classList.add('botaoVolta');
-    document.body.appendChild(voltarMenu);
+    const backToMenuButton = document.createElement('button');
+    backToMenuButton.innerHTML = 'Voltar ao Menu';
+    backToMenuButton.classList.add('botaoVolta');
+    document.body.appendChild(backToMenuButton);
 
     const questionResponsesDiv = document.createElement('div');
     questionResponsesDiv.className = 'questionResponses';
@@ -84,12 +85,10 @@ export function enter() {
 
     const options = [optionA, optionB, optionC, optionD];
 
-
-    voltarMenu.addEventListener('click', function () {
+    backToMenuButton.addEventListener('click', function () {
         leave();
         enterMenu();
     });
-
 
     options.forEach(function (option, index) {
         option.style.color = 'black';
@@ -109,7 +108,7 @@ export function enter() {
 
     startButton.addEventListener('click', function () {
         if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
-            mostraTexto();
+            showText();
         }
         cleanStart();
     });
@@ -121,7 +120,7 @@ export function enter() {
 
         if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
             resetOptionsColor();
-            mostraTexto();
+            showText();
             cleanNext1();
             console.log(gamestate.overwatchQuestionCurrentIndex);
         } else {
@@ -153,7 +152,7 @@ export function enter() {
             gamestate.overwatchQuestionCurrentIndex--;
         }
         resetOptionsColor();
-        mostraTexto();
+        showText();
         cleanBack();
     });
 
@@ -171,8 +170,7 @@ export function enter() {
         resetOptionsColor();
     });
 
-
-    function mostraTexto() {
+    function showText() {
         const arrayOverwatchQuestions = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex];
         title.innerHTML = arrayOverwatchQuestions.question;
 
@@ -229,20 +227,22 @@ export function enter() {
         backButton.style.display = 'block';
     }
 
-    function geraPerguntaAleatoria(array) {
+    function generateRandomQuestion(array) {
         for (let i = array.length - 1; i > 0; i--) {
             let random = Math.floor(Math.random() * (i + 1));
             [array[i], array[random]] = [array[random], array[i]];
         }
     }
 
-    geraPerguntaAleatoria(overwatchQuestions)
+    generateRandomQuestion(overwatchQuestions);
 
     overwatchQuestions.forEach(function (question) {
-        geraPerguntaAleatoria(question.options);
+        generateRandomQuestion(question.options);
     });
+
+    init();
 }
 
 function leave() {
-    document.body.innerHTML = ''
+    document.body.innerHTML = '';
 }

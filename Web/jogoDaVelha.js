@@ -1,109 +1,110 @@
 import { enter as enterMenu } from './index.js';
+import { init } from './score.js';
 
-export function enterJogoDaVelha() {
-    const container = document.createElement('div');
-    container.classList.add('tabuleiro'); 
-    document.body.appendChild(container);
+export function enterTicTacToe() {
+    const boardContainer = document.createElement('div');
+    boardContainer.classList.add('board');
+    document.body.appendChild(boardContainer);
 
-    const voltarMenu = document.createElement('button');
-    voltarMenu.innerHTML = 'Voltar ao Menu';
-    voltarMenu.classList.add('botaoVolta');
-    document.body.appendChild(voltarMenu);
+    const backToMenuButton = document.createElement('button');
+    backToMenuButton.innerHTML = 'Back to Menu';
+    backToMenuButton.classList.add('backButton');
+    document.body.appendChild(backToMenuButton);
 
-    voltarMenu.addEventListener('click', function () {
+    backToMenuButton.addEventListener('click', function () {
         leave();
         enterMenu();
     });
-    
+
     const button0 = document.createElement('button');
-    button0.id = 'botao-0';
-    button0.className = 'botao';
+    button0.id = 'button-0';
+    button0.className = 'button';
     button0.innerHTML = '';
-    container.appendChild(button0);
-    
+    boardContainer.appendChild(button0);
+
     const button1 = document.createElement('button');
-    button1.id = 'botao-1';
-    button1.className = 'botao';
+    button1.id = 'button-1';
+    button1.className = 'button';
     button1.innerHTML = '';
-    container.appendChild(button1);
-    
+    boardContainer.appendChild(button1);
+
     const button2 = document.createElement('button');
-    button2.id = 'botao-2';
-    button2.className = 'botao';
+    button2.id = 'button-2';
+    button2.className = 'button';
     button2.innerHTML = '';
-    container.appendChild(button2);
-    
+    boardContainer.appendChild(button2);
+
     const button3 = document.createElement('button');
-    button3.id = 'botao-3';
-    button3.className = 'botao';
+    button3.id = 'button-3';
+    button3.className = 'button';
     button3.innerHTML = '';
-    container.appendChild(button3);
-    
+    boardContainer.appendChild(button3);
+
     const button4 = document.createElement('button');
-    button4.id = 'botao-4';
-    button4.className = 'botao';
+    button4.id = 'button-4';
+    button4.className = 'button';
     button4.innerHTML = '';
-    container.appendChild(button4);
-    
+    boardContainer.appendChild(button4);
+
     const button5 = document.createElement('button');
-    button5.id = 'botao-5';
-    button5.className = 'botao';
+    button5.id = 'button-5';
+    button5.className = 'button';
     button5.innerHTML = '';
-    container.appendChild(button5);
-    
+    boardContainer.appendChild(button5);
+
     const button6 = document.createElement('button');
-    button6.id = 'botao-6';
-    button6.className = 'botao';
+    button6.id = 'button-6';
+    button6.className = 'button';
     button6.innerHTML = '';
-    container.appendChild(button6);
-    
+    boardContainer.appendChild(button6);
+
     const button7 = document.createElement('button');
-    button7.id = 'botao-7';
-    button7.className = 'botao';
+    button7.id = 'button-7';
+    button7.className = 'button';
     button7.innerHTML = '';
-    container.appendChild(button7);
-    
+    boardContainer.appendChild(button7);
+
     const button8 = document.createElement('button');
-    button8.id = 'botao-8';
-    button8.className = 'botao';
+    button8.id = 'button-8';
+    button8.className = 'button';
     button8.innerHTML = '';
-    container.appendChild(button8);
-    
-    const reset = document.createElement('button');
-    reset.id = 'reset';
-    reset.innerHTML = 'Reset';
-    container.appendChild(reset);
-    let jogador = 'X'; 
-    let jogador1 = null
-    const vitoria = document.createElement('div'); 
-    container.appendChild(vitoria);
+    boardContainer.appendChild(button8);
 
+    const resetButton = document.createElement('button');
+    resetButton.id = 'reset';
+    resetButton.innerHTML = 'Reset';
+    boardContainer.appendChild(resetButton);
 
-    let botao = document.querySelectorAll('.botao')
-    
-    botao.forEach(function (botoes) {
-        botoes.addEventListener('click', function () {
-            if (botoes.textContent == '') {
-                jogador1 = jogador
-                if (jogador == 'X') {
-                    botoes.textContent = 'X'
-                    jogador = 'O'
+    let currentPlayer = 'X';
+    let player1 = null;
+    const victoryMessage = document.createElement('div');
+    boardContainer.appendChild(victoryMessage);
+
+    let buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            if (button.textContent === '') {
+                player1 = currentPlayer;
+                if (currentPlayer === 'X') {
+                    button.textContent = 'X';
+                    currentPlayer = 'O';
                 } else {
-                    botoes.textContent = 'O'
-                    jogador = 'X'
+                    button.textContent = 'O';
+                    currentPlayer = 'X';
                 }
-                if (vitoriaParaXouO(jogador1)) {
-                    vitoria.textContent = `O jogador "${jogador1}" venceu!`;
+                if (checkVictory(player1)) {
+                    victoryMessage.textContent = `Jogador "${player1}" ganhou!`;
                 }
-                if (todosBotoesSelecionados(botao)) {
-                    vitoria.textContent = `Deu velha`;
+                if (allButtonsSelected(buttons)) {
+                    victoryMessage.textContent = `Deu velha`;
                 }
-                console.log(todosBotoesSelecionados())
+                console.log(allButtonsSelected());
             }
         });
     });
 
-    reset.addEventListener('click', function () {
+    resetButton.addEventListener('click', function () {
         button0.innerHTML = '';
         button1.innerHTML = '';
         button2.innerHTML = '';
@@ -113,12 +114,12 @@ export function enterJogoDaVelha() {
         button6.innerHTML = '';
         button7.innerHTML = '';
         button8.innerHTML = '';
-        jogador = 'X'; 
-        vitoria.innerHTML = '';
+        currentPlayer = 'X';
+        victoryMessage.innerHTML = '';
         console.log('reset');
     });
 
-    function todosBotoesSelecionados() {
+    function allButtonsSelected() {
         return button0.innerHTML !== "" &&
                button1.innerHTML !== "" &&
                button2.innerHTML !== "" &&
@@ -130,18 +131,20 @@ export function enterJogoDaVelha() {
                button8.innerHTML !== "";
     }
 
-    function vitoriaParaXouO(vencedor) {
-        return (button0.innerHTML === vencedor && button1.innerHTML === vencedor && button2.innerHTML === vencedor) ||
-               (button3.innerHTML === vencedor && button4.innerHTML === vencedor && button5.innerHTML === vencedor) ||
-               (button6.innerHTML === vencedor && button7.innerHTML === vencedor && button8.innerHTML === vencedor) ||
-               (button0.innerHTML === vencedor && button3.innerHTML === vencedor && button6.innerHTML === vencedor) ||
-               (button1.innerHTML === vencedor && button4.innerHTML === vencedor && button7.innerHTML === vencedor) ||
-               (button2.innerHTML === vencedor && button5.innerHTML === vencedor && button8.innerHTML === vencedor) ||
-               (button0.innerHTML === vencedor && button4.innerHTML === vencedor && button8.innerHTML === vencedor) ||
-               (button2.innerHTML === vencedor && button4.innerHTML === vencedor && button6.innerHTML === vencedor);
+    function checkVictory(winner) {
+        return (button0.innerHTML === winner && button1.innerHTML === winner && button2.innerHTML === winner) ||
+               (button3.innerHTML === winner && button4.innerHTML === winner && button5.innerHTML === winner) ||
+               (button6.innerHTML === winner && button7.innerHTML === winner && button8.innerHTML === winner) ||
+               (button0.innerHTML === winner && button3.innerHTML === winner && button6.innerHTML === winner) ||
+               (button1.innerHTML === winner && button4.innerHTML === winner && button7.innerHTML === winner) ||
+               (button2.innerHTML === winner && button5.innerHTML === winner && button8.innerHTML === winner) ||
+               (button0.innerHTML === winner && button4.innerHTML === winner && button8.innerHTML === winner) ||
+               (button2.innerHTML === winner && button4.innerHTML === winner && button6.innerHTML === winner);
     }
+
+    init();
 }
 
-function leave (){
-    document.body.innerHTML = ''
+function leave() {
+    document.body.innerHTML = '';
 }
