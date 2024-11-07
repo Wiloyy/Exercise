@@ -4,8 +4,6 @@ import { enter as enterMenu } from './index.js';
 export function enter() {
     document.body.innerHTML = '';
 
-    
-
     const text = document.createElement('p');
     const addButton = document.createElement('button');
     const inputTask = document.createElement('input');

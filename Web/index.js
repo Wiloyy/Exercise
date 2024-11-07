@@ -28,13 +28,12 @@ export function enter() {
     newParagraph.style.fontSize = '30px';
     newTitle.style.textAlign = 'center';
     newParagraph.style.textAlign = 'center';
-
+    
     document.body.appendChild(newTitle);
     document.body.appendChild(newParagraph);
     document.body.appendChild(buttonQuiz);
     document.body.appendChild(buttonTicTacToe);
     document.body.appendChild(buttonToDo);
-    
     init()
 
     buttonQuiz.addEventListener('click', function () {
