@@ -10,8 +10,8 @@ export function enter() {
     const buttonTicTacToe = document.createElement('button');
     const buttonToDo = document.createElement('button');
 
-    newTitle.innerHTML = 'Welcome';
-    newParagraph.innerHTML = 'Choose a game to play';
+    newTitle.innerHTML = 'Bem Vindo';
+    newParagraph.innerHTML = 'Escolha um jogo para jogar';
 
     buttonQuiz.id = 'quizGame';
     buttonQuiz.innerHTML = 'Quiz';
@@ -34,18 +34,20 @@ export function enter() {
     document.body.appendChild(buttonQuiz);
     document.body.appendChild(buttonTicTacToe);
     document.body.appendChild(buttonToDo);
+    
+    init()
 
-    buttonQuiz.addEventListener('click', function() {
+    buttonQuiz.addEventListener('click', function () {
         leave();
         enterQuizz();
     });
 
-    buttonTicTacToe.addEventListener('click', function() {
+    buttonTicTacToe.addEventListener('click', function () {
         leave();
         enterTicTacToe();
     });
 
-    buttonToDo.addEventListener('click', function() {
+    buttonToDo.addEventListener('click', function () {
         leave();
         enterToDo();
     });
@@ -65,11 +67,9 @@ function leave() {
     }
 
     if (buttons) {
-        buttons.forEach(function(button) {
+        buttons.forEach(function (button) {
             button.style.display = 'none';
         });
     }
 }
 
-enter();
-init();

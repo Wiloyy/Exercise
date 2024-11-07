@@ -1,6 +1,5 @@
 import { overwatchQuestions } from "./overwatch.js";
 import { enter as enterMenu } from './index.js';
-import { init } from './score.js';
 
 const gamestate = {
     overwatchQuestionCurrentIndex: 0,
@@ -240,7 +239,6 @@ export function enter() {
         generateRandomQuestion(question.options);
     });
 
-    init();
 }
 
 function leave() {

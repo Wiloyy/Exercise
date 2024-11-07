@@ -1,10 +1,10 @@
 import { enter as enterMenu } from './index.js';
-import { init } from './score.js';
+
 
 export function enter() {
     document.body.innerHTML = '';
 
-    init();
+    
 
     const text = document.createElement('p');
     const addButton = document.createElement('button');

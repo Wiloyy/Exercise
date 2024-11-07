@@ -1,5 +1,4 @@
 import { enter as enterMenu } from './index.js';
-import { init } from './score.js';
 
 export function enterTicTacToe() {
     const boardContainer = document.createElement('div');
@@ -141,10 +140,9 @@ export function enterTicTacToe() {
                (button0.innerHTML === winner && button4.innerHTML === winner && button8.innerHTML === winner) ||
                (button2.innerHTML === winner && button4.innerHTML === winner && button6.innerHTML === winner);
     }
-
-    init();
 }
 
 function leave() {
+    
     document.body.innerHTML = '';
 }
