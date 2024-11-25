@@ -1,6 +1,9 @@
 import { enter as enterMenu } from './index.js';
+import { enter as enterToDo } from './toDo.js';
+import { Leave } from './quizz.js';
 
 export function enterTicTacToe() {
+    enterToDo()
     const boardContainer = document.createElement('div');
     boardContainer.classList.add('board');
     document.body.appendChild(boardContainer);
@@ -11,7 +14,8 @@ export function enterTicTacToe() {
     document.body.appendChild(backToMenuButton);
 
     backToMenuButton.addEventListener('click', function () {
-        leave();
+        const leaveJogoDaVelha = new LeaveJogoDaVelha('To Do List');
+        leaveJogoDaVelha.reseta();
         enterMenu();
     });
 
@@ -74,75 +78,88 @@ export function enterTicTacToe() {
     resetButton.innerHTML = 'Reset';
     boardContainer.appendChild(resetButton);
 
-    let currentPlayer = 'X';
-    let player1 = null;
-    const victoryMessage = document.createElement('div');
+    const victoryMessage = document.createElement('h2');
+    victoryMessage.id = 'victoryMessage'
     boardContainer.appendChild(victoryMessage);
 
-    let buttons = document.querySelectorAll('.button');
+    class JogoDaVelha {
+        constructor(victoryMessage) {
+            this.victoryMessage = victoryMessage
+            this.currentPlayer = 'X'
+            this.player1 = null
+            this.lastButton = null;
+        }
 
-    buttons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            if (button.textContent === '') {
-                player1 = currentPlayer;
-                if (currentPlayer === 'X') {
-                    button.textContent = 'X';
-                    currentPlayer = 'O';
+        button(clickedButton) {
+            if (clickedButton.textContent === '') {
+                this.lastButton = clickedButton;
+                this.player1 = this.currentPlayer;
+
+                if (this.currentPlayer === 'X') {
+                    this.lastButton.textContent = 'X';
+                    this.currentPlayer = 'O';
                 } else {
-                    button.textContent = 'O';
-                    currentPlayer = 'X';
+                    this.lastButton.textContent = 'O';
+                    this.currentPlayer = 'X';
                 }
-                if (checkVictory(player1)) {
-                    victoryMessage.textContent = `Jogador "${player1}" ganhou!`;
+
+                if (this.checkVictory(this.player1)) {
+                    this.victoryMessage.textContent = `Jogador "${this.player1}" ganhou!`;
+                } else if (this.allButtonsSelected()) {
+                    this.victoryMessage.textContent = `Deu velha`;
                 }
-                if (allButtonsSelected(buttons)) {
-                    victoryMessage.textContent = `Deu velha`;
-                }
-                console.log(allButtonsSelected());
             }
-        });
-    });
+        }
 
-    resetButton.addEventListener('click', function () {
-        button0.innerHTML = '';
-        button1.innerHTML = '';
-        button2.innerHTML = '';
-        button3.innerHTML = '';
-        button4.innerHTML = '';
-        button5.innerHTML = '';
-        button6.innerHTML = '';
-        button7.innerHTML = '';
-        button8.innerHTML = '';
-        currentPlayer = 'X';
-        victoryMessage.innerHTML = '';
-        console.log('reset');
-    });
+        allButtonsSelected() {
+            return button0.innerHTML !== "" &&
+                button1.innerHTML !== "" &&
+                button2.innerHTML !== "" &&
+                button3.innerHTML !== "" &&
+                button4.innerHTML !== "" &&
+                button5.innerHTML !== "" &&
+                button6.innerHTML !== "" &&
+                button7.innerHTML !== "" &&
+                button8.innerHTML !== "";
+        }
 
-    function allButtonsSelected() {
-        return button0.innerHTML !== "" &&
-               button1.innerHTML !== "" &&
-               button2.innerHTML !== "" &&
-               button3.innerHTML !== "" &&
-               button4.innerHTML !== "" &&
-               button5.innerHTML !== "" &&
-               button6.innerHTML !== "" &&
-               button7.innerHTML !== "" &&
-               button8.innerHTML !== "";
+        checkVictory(winner) {
+            return (button0.innerHTML === winner && button1.innerHTML === winner && button2.innerHTML === winner) ||
+                (button3.innerHTML === winner && button4.innerHTML === winner && button5.innerHTML === winner) ||
+                (button6.innerHTML === winner && button7.innerHTML === winner && button8.innerHTML === winner) ||
+                (button0.innerHTML === winner && button3.innerHTML === winner && button6.innerHTML === winner) ||
+                (button1.innerHTML === winner && button4.innerHTML === winner && button7.innerHTML === winner) ||
+                (button2.innerHTML === winner && button5.innerHTML === winner && button8.innerHTML === winner) ||
+                (button0.innerHTML === winner && button4.innerHTML === winner && button8.innerHTML === winner) ||
+                (button2.innerHTML === winner && button4.innerHTML === winner && button6.innerHTML === winner);
+        }
+
+        resetGame() {
+            this.buttons.forEach(button => button.textContent = '');
+            this.currentPlayer = 'X';
+            this.victoryMessage.textContent = '';
+        }
+
+
     }
 
-    function checkVictory(winner) {
-        return (button0.innerHTML === winner && button1.innerHTML === winner && button2.innerHTML === winner) ||
-               (button3.innerHTML === winner && button4.innerHTML === winner && button5.innerHTML === winner) ||
-               (button6.innerHTML === winner && button7.innerHTML === winner && button8.innerHTML === winner) ||
-               (button0.innerHTML === winner && button3.innerHTML === winner && button6.innerHTML === winner) ||
-               (button1.innerHTML === winner && button4.innerHTML === winner && button7.innerHTML === winner) ||
-               (button2.innerHTML === winner && button5.innerHTML === winner && button8.innerHTML === winner) ||
-               (button0.innerHTML === winner && button4.innerHTML === winner && button8.innerHTML === winner) ||
-               (button2.innerHTML === winner && button4.innerHTML === winner && button6.innerHTML === winner);
+    var jogoDaVelha = new JogoDaVelha(victoryMessage)
+
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(function (button) {
+        button.onclick = function () {
+            jogoDaVelha.button(button);
+        };
+    });
+
+    resetButton.onclick = function () {
+        jogoDaVelha.resetGame()
     }
 }
 
-function leave() {
-    
-    document.body.innerHTML = '';
+class LeaveJogoDaVelha extends Leave {
+    constructor(leave) {
+        super(leave)
+    }
 }
+

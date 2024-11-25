@@ -51,5 +51,4 @@ function leave() {
     }
 }
 
-enter()
 

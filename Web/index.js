@@ -2,6 +2,7 @@ import { enter as enterToDo } from './toDo.js';
 import { init } from './score.js';
 import { enterTicTacToe } from './jogoDaVelha.js';
 import { enter as enterQuizz } from './quizz.js';
+import { enter as enterAdivinhacao } from './jogoadivinhaçao.js';
 
 export function enter() {
     const newTitle = document.createElement('h1');
@@ -48,7 +49,7 @@ export function enter() {
 
     buttonToDo.addEventListener('click', function () {
         leave();
-        enterToDo();
+        enterToDo()
     });
 }
 
@@ -72,3 +73,4 @@ function leave() {
     }
 }
 
+enter()

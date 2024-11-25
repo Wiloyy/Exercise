@@ -1,36 +1,46 @@
-const botao = document.getElementById('botao')
-const reset = document.getElementById('reset')
-const titulo = document.getElementById('titulo')
-const palpite = document.getElementById('palpite')
-let numero = geraNumeroAleatorio(1, 100);
-
-botao.addEventListener('click', function(){
-    const valor = palpite.value;
-    if(numero < valor){
-        editaTextoTitulo(`O numero é menor, seu ultimo palpite foi:  ${valor}` )
-    } else if (numero > valor) {
-        editaTextoTitulo(`O numero é maior, seu ultimo palpite foi:  ${valor}` )
-    } else if (numero == valor){
-        editaTextoTitulo(`ACERTOUUU!!!!!`)
-    } else if (valor > 100 || valor < 1) {
-        editaTextoTitulo(`É de 1 a 100 bobinho`)
+class JogoAdivinhacao {
+    constructor(titulo, palpite) {
+        this.titulo = titulo;
+        this.palpite = palpite;
+        this.numero = this.geraNumeroAleatorio(1, 100);
     }
-    })
-    
 
+    botao() {
+        const valor = this.palpite.value
 
-    
-reset.addEventListener('click', function(){
-     numero = geraNumeroAleatorio(1, 100);
-     editaTextoTitulo(`Novo número gerado!`);
-})
+        if (valor < 1 || valor > 100) {
+            this.editaTexto(`É de 1 a 100, bobinho!`);
+            return;
+        }
 
-function  editaTextoTitulo(texto){
-     titulo.innerHTML = texto
+        if (this.numero < valor) {
+            this.editaTexto(`O número é menor, seu último palpite foi: ${valor}`);
+        } else if (this.numero > valor) {
+            this.editaTexto(`O número é maior, seu último palpite foi: ${valor}`);
+        } else {
+            this.editaTexto(`ACERTOUUU!!!!!`);
+        }
+    }
+
+    reset() {
+        this.numero = this.geraNumeroAleatorio(1, 100);
+        this.editaTexto(`Novo número gerado!`);
+        this.palpite.value = '';
+    }
+
+    editaTexto(texto) {
+        this.titulo.innerHTML = texto;
+    }
+
+    geraNumeroAleatorio(min, max) {
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;
+    }
 }
 
-function geraNumeroAleatorio(min, max) {
-    const minCeiled = Math.ceil(min);
-    const maxFloored = Math.floor(max);
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); 
-  }
+const titulo = document.getElementById('titulo');
+const palpite = document.getElementById('palpite');
+
+var jogoAdivinhacao = new JogoAdivinhacao(titulo, palpite);
+

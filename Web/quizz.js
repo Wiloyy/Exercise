@@ -51,6 +51,7 @@ export function enter() {
     resetButton.innerHTML = 'Reset';
     document.body.appendChild(resetButton);
 
+
     const startButton = document.createElement('button');
     startButton.innerHTML = 'Iniciar';
     document.body.appendChild(startButton);
@@ -72,26 +73,47 @@ export function enter() {
     questionResponsesDiv.appendChild(optionD);
     questionResponsesDiv.appendChild(nextButton);
     questionResponsesDiv.appendChild(backButton);
-
     document.body.appendChild(questionResponsesDiv);
     document.body.appendChild(title);
     document.body.appendChild(introText);
     document.body.appendChild(additionalText);
 
+    questionResponsesDiv.style.display = 'none';
     nextButton.style.display = 'none';
     resetButton.style.display = 'none';
     backButton.style.display = 'none';
 
-    const options = [optionA, optionB, optionC, optionD];
-
     backToMenuButton.addEventListener('click', function () {
-        leave();
+        const leaveInstance = new Leave();
+        leaveInstance.reseta();
         enterMenu();
     });
 
-    options.forEach(function (option, index) {
-        option.style.color = 'black';
-        option.addEventListener('click', function () {
+    startButton.addEventListener('click', function () {
+        questionResponsesDiv.style.display = 'grid';
+        questionResponsesDiv.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        startButton.style.display = 'none';
+        introText.innerHTML = '';
+        overwatchQuizz.showText();
+    });
+
+    resetButton.addEventListener('click', function () {
+        gamestate.overwatchQuestionCurrentIndex = 0;
+        questionResponsesDiv.style.display = 'none';
+        startButton.style.display = 'block';
+        introText.innerHTML = 'Clique em iniciar para começar o quiz. Espero que você goste! :)';
+    });
+
+    class OverwatchQuizz {
+        constructor(text, lilText, text1, title) {
+            this.text = text;
+            this.lilText = lilText;
+            this.text1 = text1;
+            this.title = title;
+            this.geraPerguntaAleatoria(overwatchQuestions);
+        }
+
+        option(option, indice) {
             gamestate.penultimateButton = gamestate.lastButtonClicked;
             gamestate.lastButtonClicked = option;
 
@@ -100,147 +122,163 @@ export function enter() {
             }
 
             option.style.color = 'green';
-            overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = index;
-            cleanOption();
-        });
-    });
-
-    startButton.addEventListener('click', function () {
-        if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
-            showText();
+            overwatchQuestions[gamestate.overwatchQuestionCurrentIndex].choice = indice;
+            console.log(`Botão clicado: ${option.id}, Índice: ${indice}`);
+            console.log(`Botão anterior: ${gamestate.penultimateButton?.id}`);
+            this.cleanOption();
         }
-        cleanStart();
-    });
 
-    nextButton.addEventListener('click', function () {
-        nextButton.innerHTML = 'Próximo';
-        introText.innerHTML = '';
-        gamestate.overwatchQuestionCurrentIndex++;
-
-        if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
-            resetOptionsColor();
-            showText();
-            cleanNext1();
-            console.log(gamestate.overwatchQuestionCurrentIndex);
-        } else {
-            overwatchQuestions.forEach(function (question) {
-                if (question.options[question.choice]?.correct) {
-                    gamestate.score++;
-                }
-            });
-
-            if (gamestate.score === 15) {
-                title.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
-            } else if (gamestate.score === 0) {
-                title.innerHTML = `Você acertou ${gamestate.score}, você não sabe nada sobre Overwatch!`;
-            } else if (gamestate.score >= 1 && gamestate.score <= 5) {
-                title.innerHTML = `Você acertou ${gamestate.score}, você tem uma noção do jogo, mas ainda tem muito para aprender!`;
-            } else if (gamestate.score >= 6 && gamestate.score <= 10) {
-                title.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
-            } else if (gamestate.score >= 11 && gamestate.score <= 14) {
-                title.innerHTML = `Você acertou ${gamestate.score}, você é um verdadeiro conhecedor de Overwatch!`;
+        start() {
+            if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
+                this.showText();
             }
-
-            cleanNext2();
-            introText.innerHTML = 'Se quiser jogar novamente clique em reset : )';
+            this.cleanStart();
+            this.cleanOption()
         }
-    });
 
-    backButton.addEventListener('click', function () {
-        if (gamestate.overwatchQuestionCurrentIndex > 0) {
-            gamestate.overwatchQuestionCurrentIndex--;
+        next() {
+            nextButton.innerHTML = 'Próximo';
+            lilText.innerHTML = '';
+            gamestate.overwatchQuestionCurrentIndex++;
+            console.log(`Índice atual: ${gamestate.overwatchQuestionCurrentIndex}`);
+
+            if (gamestate.overwatchQuestionCurrentIndex < overwatchQuestions.length) {
+                this.resetOptionsColor();
+                this.showText();
+                this.cleanNext1();
+                console.log(gamestate.overwatchQuestionCurrentIndex)
+            } else {
+                overwatchQuestions.forEach(function (question) {
+                    if (question.options[question.choice].correct == true) {
+                        gamestate.score++
+                    }
+                });
+
+                if (gamestate.score === 15) {
+                    text.innerHTML = `Você acertou ${gamestate.score}, você sabe tudo, parabéns!`;
+                } else if (gamestate.score === 0) {
+                    text.innerHTML = `Você acertou ${gamestate.score}, você não sabe nada sobre Overwatch!`;
+                } else if (gamestate.score >= 1 && gamestate.score <= 5) {
+                    text.innerHTML = `Você acertou ${gamestate.score}, você tem uma noção do jogo, mas ainda tem muito para aprender!`;
+                } else if (gamestate.score >= 6 && gamestate.score <= 10) {
+                    text.innerHTML = `Você acertou ${gamestate.score}, você sabe bastante, porém nem tudo. Mas mesmo assim, parabéns!`;
+                } else if (gamestate.score >= 11 && gamestate.score <= 14) {
+                    text.innerHTML = `Você acertou ${gamestate.score}, você é um verdadeiro conhecedor de Overwatch!`;
+                }
+                this.showFinalResult();
+                this.cleanNext2();
+                lilText.innerHTML = 'Se quiser jogar novamente clique em reset : )';
+            }
         }
-        resetOptionsColor();
-        showText();
-        cleanBack();
-    });
 
-    resetButton.addEventListener('click', function () {
-        gamestate.overwatchQuestionCurrentIndex = 0;
-        gamestate.score = 0;
+        backButton() {
+            if (gamestate.overwatchQuestionCurrentIndex > 0) {
+                gamestate.overwatchQuestionCurrentIndex--;
+            }
+            this.resetOptionsColor();
+            this.showText();
+            this.cleanBack();
+        }
 
-        cleanReset();
+        showText() {
+            const arrayOverwatchQuestions = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex];
+            this.text.innerHTML = arrayOverwatchQuestions.question;
 
-        nextButton.innerHTML = 'Próximo';
-        introText.innerHTML = 'Clique em iniciar para começar o quiz. Espero que você goste! :)';
-        title.innerHTML = 'OVERWATCH Quiz!!';
+            optionA.textContent = `A: ${arrayOverwatchQuestions.options[0].description}`;
+            optionB.textContent = `B: ${arrayOverwatchQuestions.options[1].description}`;
+            optionC.textContent = `C: ${arrayOverwatchQuestions.options[2].description}`;
+            optionD.textContent = `D: ${arrayOverwatchQuestions.options[3].description}`;
+        }
 
-        questionResponsesDiv.style.display = 'none';
-        resetOptionsColor();
-    });
+        resetOptionsColor() {
+            document.querySelectorAll('.options').forEach(option => {
+                option.style.color = 'black';
+            });
+        }
 
-    function showText() {
-        const arrayOverwatchQuestions = overwatchQuestions[gamestate.overwatchQuestionCurrentIndex];
-        title.innerHTML = arrayOverwatchQuestions.question;
+        cleanStart() {
+            startButton.style.display = 'none';
+            nextButton.style.display = 'none';
+            resetButton.style.display = 'none';
+            backButton.style.display = 'none';
+            this.lilText.innerHTML = '';
+            document.querySelectorAll('.options').forEach(option => {
+                option.style.display = 'block';
+                option.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                option.style.gap = '10px';
+            });
+        }
 
-        optionA.textContent = `A: ${arrayOverwatchQuestions.options[0].description}`;
-        optionB.textContent = `B: ${arrayOverwatchQuestions.options[1].description}`;
-        optionC.textContent = `C: ${arrayOverwatchQuestions.options[2].description}`;
-        optionD.textContent = `D: ${arrayOverwatchQuestions.options[3].description}`;
+        cleanNext1() {
+            nextButton.style.display = 'none';
+            backButton.style.display = 'none';
+        }
+
+        cleanNext2() {
+            nextButton.style.display = 'none';
+            backButton.style.display = 'none';
+            resetButton.style.display = 'block';
+            document.querySelectorAll('.options').forEach(option => {
+                option.style.display = 'none';
+            });
+        }
+
+        cleanBack() {
+            backButton.style.display = 'none';
+            nextButton.style.display = 'none';
+        }
+
+        cleanReset() {
+            startButton.style.display = 'block';
+            nextButton.style.display = 'none';
+            resetButton.style.display = 'none';
+            backButton.style.display = 'none';
+            document.querySelectorAll('.options').forEach(option => {
+                option.style.display = 'none';
+            });
+        }
+
+        cleanOption() {
+            nextButton.style.display = 'block';
+            backButton.style.display = 'block';
+        }
+
+        geraPerguntaAleatoria(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let random = Math.floor(Math.random() * (i + 1));
+                [array[i], array[random]] = [array[random], array[i]];
+            }
+        }
     }
 
-    function cleanStart() {
-        startButton.style.display = 'none';
-        nextButton.style.display = 'none';
-        resetButton.style.display = 'none';
-        backButton.style.display = 'none';
-        introText.innerHTML = '';
-        questionResponsesDiv.style.display = 'grid';
-        questionResponsesDiv.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        questionResponsesDiv.style.gap = '10px';
-    }
+    const overwatchQuizz = new OverwatchQuizz(text, lilText, text1, title);
 
-    function resetOptionsColor() {
-        options.forEach(function (option) {
-            option.style.color = 'black';
+    document.querySelectorAll('.options').forEach(function(option, index) {
+        option.addEventListener('click', function() {
+            overwatchQuizz.option(option, index);
         });
-    }
-
-    function cleanNext1() {
-        nextButton.style.display = 'none';
-        backButton.style.display = 'none';
-    }
-
-    function cleanNext2() {
-        nextButton.style.display = 'none';
-        backButton.style.display = 'none';
-        resetButton.style.display = 'block';
-        questionResponsesDiv.style.display = 'none';
-    }
-
-    function cleanBack() {
-        backButton.style.display = 'none';
-        nextButton.style.display = 'none';
-    }
-
-    function cleanReset() {
-        startButton.style.display = 'block';
-        nextButton.style.display = 'none';
-        resetButton.style.display = 'none';
-        backButton.style.display = 'none';
-        questionResponsesDiv.style.display = 'none';
-    }
-
-    function cleanOption() {
-        nextButton.style.display = 'block';
-        backButton.style.display = 'block';
-    }
-
-    function generateRandomQuestion(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            let random = Math.floor(Math.random() * (i + 1));
-            [array[i], array[random]] = [array[random], array[i]];
-        }
-    }
-
-    generateRandomQuestion(overwatchQuestions);
-
-    overwatchQuestions.forEach(function (question) {
-        generateRandomQuestion(question.options);
     });
+
+    resetButton.onclick = function () {
+        overwatchQuizz.reset()
+    }
+
+    nextButton.onclick = function () {
+        overwatchQuizz.next()
+    }
+
+    backButton.onclick = function () {
+        overwatchQuizz.backButton()
+    }
 
 }
 
-function leave() {
-    document.body.innerHTML = '';
+export class Leave {
+    constructor(leave) {
+        this.leave = leave
+    }
+
+    reseta() {
+        document.body.innerHTML = ''
+    }
 }
